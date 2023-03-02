@@ -1,0 +1,30 @@
+header {
+    background: #080909;
+}
+
+h1 {
+    color: rgb(255, 255, 255);
+    background: #080909;
+    font-size: 28px;
+    margin: 0;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.logo {
+    padding: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.active-logo {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.pointer{
+    cursor: pointer;
+}
