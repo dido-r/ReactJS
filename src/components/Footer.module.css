@@ -30,7 +30,7 @@ footer {
     color: rgb(86, 85, 84);
 }
 
-h4 {
+.footer-h4 {
     font-size: 18px;
     font-weight: 600;
     color: #ccc5c5;
@@ -42,20 +42,20 @@ h4 {
     margin-bottom: 30px;
 }
 
-ul {
+.footer-ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-li {
+.footer-li {
     padding: 10px 0;
     display: flex;
     align-items: center;
     line-height: 1;
 }
 
-li:first-child {
+.footer-li:first-child {
     padding-top: 5px;
 }
 

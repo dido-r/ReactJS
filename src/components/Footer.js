@@ -8,32 +8,32 @@ export function Footer() {
         <footer id="footer">
             <div className={styles['footer-info']}>
                 <div className={styles['footer-row-align']}>
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><a className={styles['link-a']} href="index.html">Home</a></li>
-                        <li><a className={styles['link-a']} href="about.html">About us</a></li>
-                        <li><a className={styles['link-a']} href="lorem.html">Terms of service</a></li>
-                        <li><a className={styles['link-a']} href="lorem.html">Privacy policy</a></li>
+                    <h4 class={styles['footer-h4']}>Useful Links</h4>
+                    <ul className={styles['footer-ul']}>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="index.html">Home</a></li>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="about.html">About us</a></li>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="lorem.html">Terms of service</a></li>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="lorem.html">Privacy policy</a></li>
                     </ul>
                 </div>
 
                 <div className={styles['footer-row-align']}>
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a className={styles['link-a']} href="contact.html">Customer service</a></li>
-                        <li><a className={styles['link-a']} href="lorem.html">Return policy</a></li>
-                        <li><a className={styles['link-a']} href="lorem.html">Shipping information</a></li>
-                        <li><a className={styles['link-a']} href="faqs.html">FAQ</a></li>
+                    <h4 class={styles['footer-h4']}>Our Services</h4>
+                    <ul className={styles['footer-ul']}>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="contact.html">Customer service</a></li>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="lorem.html">Return policy</a></li>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="lorem.html">Shipping information</a></li>
+                        <li className={styles['footer-li']}><a className={styles['link-a']} href="faqs.html">FAQ</a></li>
                     </ul>
                 </div>
 
                 <div className={styles['footer-row-align']}>
-                    <h4>Contact Us</h4>
-                    <ul>
-                        <li>Ruse, 7000</li>
-                        <li>Bulgaria</li>
-                        <li>Phone: +359999999999</li>
-                        <li>Email: some_mail@projectsite.com</li>
+                    <h4 class={styles['footer-h4']}>Contact Us</h4>
+                    <ul className={styles['footer-ul']}>
+                        <li className={styles['footer-li']}>Ruse, 7000</li>
+                        <li className={styles['footer-li']}>Bulgaria</li>
+                        <li className={styles['footer-li']}>Phone: +359999999999</li>
+                        <li className={styles['footer-li']}>Email: some_mail@projectsite.com</li>
                     </ul>
                 </div>
 
@@ -44,7 +44,6 @@ export function Footer() {
                     <a href="https://www.pinterest.com"><FontAwesomeIcon className={styles['social-links']} icon={faPinterest} /></a>
                 </div>
             </div>
-
         </footer>
     );
 }

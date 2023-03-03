@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------
+  # Header
+  --------------------------------------------------------------*/
+
 header {
     background: #080909;
 }
@@ -25,6 +29,96 @@ h1 {
     text-align: center;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
+}
+
+/*--------------------------------------------------------------
+  # Navigation Menu
+  --------------------------------------------------------------*/
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #080909;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.usernav {
+    height: 0;
+    width: 12%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #080909;
+    overflow-y: hidden;
+    transition: 0.5s;
+    margin-top: 50px;
+}
+
+.dropdown,
+.sidenav,
+.usernav {
+    list-style-type: none;
+}
+
+.dropdown {
+    font-size: 2px;
+}
+
+.dropdown {
+    font-size: 20px;
+}
+
+.side-main-a {
+    font-size: 25px;
+}
+
+.side-main-a,
+.closebtn,
+.main-a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.side-main-a:hover,
+.closebtn:hover,
+.main-a:hover {
+    color: #f1f1f1;
+}
+
+.closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+
+    .sidenav,
+    .usernav {
+        padding-top: 15px;
+    }
+
+    .side-main-a,
+    .closebtn,
+    .main-a {
+        font-size: 18px;
+    }
+}
+
+.more-ul {
+    height: 0px;
 }
