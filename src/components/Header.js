@@ -1,4 +1,4 @@
-import styles from './Header.module.css';
+import styles from './style/Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
@@ -17,6 +17,11 @@ export function Header() {
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
     }
+
+    function dropMenuOne() {
+        let list = document.getElementById('hidden-nav-ul');
+        list.style.display === "none" ? list.style.display = "block" : list.style.display = "none";
+    }
     
     return (
         <header>
@@ -27,25 +32,25 @@ export function Header() {
             </div>
 
             <div id="myUsernav" className={styles['usernav']}>
-                <li><a href="myorders.html" className={styles['side-main-a']}>Orders</a></li>
-                <li><a href="checkout.html" className={styles['side-main-a']}>Checkout</a></li>
-                <li><a href="login.html" className={styles['side-main-a']}>Login</a></li>
+                <li><a href="#" className={styles['side-main-a']}>Orders</a></li>
+                <li><a href="#" className={styles['side-main-a']}>Checkout</a></li>
+                <li><a href="#" className={styles['side-main-a']}>Login</a></li>
             </div>
 
             <div id="mySidenav" className={styles['sidenav']}>
-                <a href="javascript:void(0)" className={styles['closebtn']} onClick={() => closeNav()}>&times;</a>
-                <li><a href="index.html" className={styles['side-main-a']}>Home</a></li>
-                <li><a href="about.html" className={styles['side-main-a']}>About</a></li>
-                <li><a href="#" onclick="dropMenuOne(0)" className={styles['side-main-a']}>Products</a></li>
-                <ul className={styles['more-ul']} style={{display: "none"}}>
+                <a href="#" className={styles['closebtn']} onClick={() => closeNav()}>&times;</a>
+                <li><a href="#" className={styles['side-main-a']}>Home</a></li>
+                <li><a href="#" className={styles['side-main-a']}>About</a></li>
+                <li><a href="#" onClick={() => dropMenuOne()} className={styles['side-main-a']}>Products</a></li>
+                <ul id='hidden-nav-ul' style={{display: "none"}}>
                     <li className={styles['dropdown']}>
-                        <a href="productW.html" className={styles['main-a']}>Women</a>
+                        <a href="#" className={styles['main-a']}>Women</a>
                     </li>
                     <li className={styles['dropdown']}>
-                        <a href="productM.html" className={styles['main-a']}>Men</a>
+                        <a href="#" className={styles['main-a']}>Men</a>
                     </li>
                 </ul>
-                <li><a href="contact.html" className={styles['side-main-a']}>Contact</a></li>
+                <li><a href="#" className={styles['side-main-a']}>Contact</a></li>
             </div>
         </header>
     );
