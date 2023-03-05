@@ -5,7 +5,7 @@ import { faFacebook, faTwitter, faInstagram, faPinterest } from "@fortawesome/fr
 export function Footer() {
 
     return (
-        <footer id="footer">
+        <footer className={styles['main-footer']}>
             <div className={styles['footer-info']}>
                 <div className={styles['footer-row-align']}>
                     <h4 className={styles['footer-h4']}>Useful Links</h4>

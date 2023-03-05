@@ -2,6 +2,15 @@
     padding-top: 30px;
 }
 
+.contact-head{
+    text-align: center;
+}
+
+.contact-icons{
+    width: 30px;
+    height: auto;
+}
+
 .info-box {
     color: #444;
     box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
@@ -11,6 +20,8 @@
     transition: all 0.3s ease-in-out;
     margin-left: 10%;
     margin-right: 10%;
+    color: #444;
+    text-align: center;
 }
 
 .info-box:hover {
@@ -32,8 +43,8 @@
     margin-right: 5%;
 }
 
-.contact input {
-    width: 100%;
+.contact-input {
+    width: 80%;
     margin-bottom: 10px;
     background: rgba(245, 243, 243, 0.3);
     border: none;
@@ -44,15 +55,10 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 4px;
     box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);
-    -webkit-transition: box-shadow .5s ease;
-    -moz-transition: box-shadow .5s ease;
-    -o-transition: box-shadow .5s ease;
-    -ms-transition: box-shadow .5s ease;
-    transition: box-shadow .5s ease;
 }
 
-.contact textarea {
-    width: 100%;
+.contact-textarea {
+    width: 80%;
     margin-bottom: 10px;
     background: rgba(245, 243, 243, 0.3);
     border: none;
@@ -63,131 +69,32 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
     border-radius: 4px;
     box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);
-    -webkit-transition: box-shadow .5s ease;
-    -moz-transition: box-shadow .5s ease;
-    -o-transition: box-shadow .5s ease;
-    -ms-transition: box-shadow .5s ease;
-    transition: box-shadow .5s ease;
-    display: block;
     font-family: "Roboto", sans-serif;
 }
 
-.contact {
-    padding-bottom: 30px;
-}
-
-.contact .info-box {
-    color: #444;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
-    padding: 20px 0 30px 0;
-    margin-bottom: 30px;
-}
-
-.contact .info-box i {
-    font-size: 32px;
-    color: #68A4C4;
-    border-radius: 50%;
-    padding: 8px;
-    border: 2px dotted #a2cce3;
-}
-
-.contact .info-box h3 {
-    font-size: 20px;
-    color: #666;
-    font-weight: 700;
-    margin: 10px 0;
-}
-
-.contact .info-box p {
-    padding: 0;
-    line-height: 24px;
-    font-size: 14px;
-    margin-bottom: 0;
-}
-
-.contact .email-form {
-    box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
-    padding: 30px;
-    margin-bottom: 30px;
-}
-
-.contact .email-form input,
-.contact .email-form textarea {
+.contact-input,
+.contact-textarea {
     border-radius: 0;
     box-shadow: none;
     font-size: 14px;
 }
 
-.contact .email-form input::focus,
-.contact .email-form textarea::focus {
-    background-color: #68A4C4;
-}
-
-.contact .email-form input {
+.contact-input {
     padding: 10px 15px;
 }
 
-.contact .email-form textarea {
+.contact-textarea {
     padding: 12px 15px;
 }
 
-.contact .email-form button[type=submit] {
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    display: inline-block;
-    width: auto;
-    height: auto;
-    text-decoration: none;
-    text-align: center;
-    vertical-align: middle;
+.contact-btn {
     cursor: pointer;
     border: 1px solid transparent;
-    border-radius: 0;
-    padding: 8px 15px 8px;
     background-color: #000;
     color: #fff;
     font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
-    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
-    line-height: normal;
-    white-space: normal;
-    font-size: 13px;
-    -ms-transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background: #000;
-    color: rgb(255, 255, 255);
     font-size: 13px;
     padding: 10px 24px;
-    box-sizing: border-box;
-    border-color: rgb(0, 0, 0);
-    border: solid;
-    cursor: pointer;
-}
-
-@-webkit-keyframes animate-loading {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes animate-loading {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
 }
