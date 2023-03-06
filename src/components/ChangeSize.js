@@ -1,6 +1,6 @@
 import styles from './style/Details.module.css';
 
-export function Details() {
+export function ChangeSize() {
 
 
     function showSizeChart() {
@@ -12,17 +12,6 @@ export function Details() {
         let el = document.getElementById("tab1");
         el.style.height === "" ? el.style.height = "180px" : el.style.height = "";
     }
-
-    function increaseQty() {
-        let quantity = document.getElementById("Quantity");
-        quantity.value = Number(quantity.value) + 1;
-    }
-
-    function decreaseQty() {
-        let quantity = document.getElementById("Quantity");
-        quantity.value === "1" ? quantity.value = "1" : quantity.value = Number(quantity.value) - 1;
-    }
-
 
     return (
 
@@ -40,7 +29,7 @@ export function Details() {
                     the industry's standard dummy text ever since the 1500s, when an unknown printer
                     took a galley of
                     type and scrambled it to make a type specimen book.</p>
-                    
+                <h4>Choose a new size:</h4>
                 <form>
                     <div className={styles['product-size']} >
                     <div data-value="S" className={styles['swatch-element']}>
@@ -56,13 +45,7 @@ export function Details() {
                                 value="M" /></label>
                         </div>
                     </div>
-                    <div className={styles['wrapQtyBtn']}>
-                        <div className={styles['qtyField']}>
-                            <a className={styles['qtyBtn']} onClick={() => decreaseQty()} href="#"><i className={styles['fa']} aria-hidden="true">-</i></a>
-                            <input type="text" id="Quantity" name="quantity" defaultValue={1} className={styles['qty']} />
-                            <a className={styles['qtyBtn']} onClick={() => increaseQty()} href="#"><i className={styles['fa']} aria-hidden="true">+</i></a>
-                        </div>
-                    </div>
+                    
                     <div className={styles['product-form-item-submit']}>
                         <button type="button" name="add" className={styles['product-form-item-submit-btn']}>Add to cart</button>
                     </div>

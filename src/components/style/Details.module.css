@@ -66,26 +66,14 @@
     cursor: pointer;
 }
 
-.swatch-input+.product-form-label.large {
-    width: 50px;
-    height: 50px;
-}
 
-.swatch-input+.product-form-label:checked { 
-    border: 2px solid #111111;
+.swatch-input:checked+.product-form-label { 
+    border: 1px solid #111111;
     box-shadow: none;
 }
 
-.swatch-input+.product-form-label.large {
-    width: 40px;
-    height: 40px;
-}
-
-.swatch-input+.product-form-label.large:not(.color) {
-    line-height: 36px;
-}
-
-.swatch-input+.product-form-label {
+.product-form-label,
+.swatch-input {
     color: #333;
     font-size: 12px;
     font-weight: 400;
@@ -93,7 +81,7 @@
     text-transform: capitalize;
     display: inline-block;
     margin: 0;
-    min-width: 30px;
+    min-width: 10px;
     height: 30px;
     overflow: hidden;
     text-align: center;
