@@ -1,8 +1,7 @@
 import { About } from './components/About';
-import { CatalogMan } from './components/CatalogMan';
-import { CatalogWoman } from './components/CatalogWoman';
+import { Catalog } from './components/Catalog';
 import { ChangeSize } from './components/ChangeSize';
-import { Checkout } from './components/Chechout';
+import { Checkout } from './components/Checkout';
 import { Contact } from './components/Contact';
 import { Details } from './components/Details';
 import { Faqs } from './components/Faqs';
@@ -21,7 +20,7 @@ function App() {
         <>
             <Header />
                 <main>
-                    <Checkout />
+                    <Catalog />
                 </main>
             <Footer />
         </>
