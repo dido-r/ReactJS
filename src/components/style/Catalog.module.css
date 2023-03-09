@@ -3,10 +3,6 @@
     width: 100%;
     margin: 0 auto;
     vertical-align: middle;
-    -ms-transition: all ease-out 0.4s;
-    -webkit-transition: all ease-out 0.4s;
-    transition: all ease-out 0.4s;
-    width: auto;
     height: 250px;
 }
 
@@ -18,8 +14,15 @@
     color: #444444;
 }
 
+.ava-size{
+    font-family: "Roboto Slab", Helvetica, Tahoma, Arial, serif;
+    font-size: 12px;
+    max-width: 170px;
+}
+
 .catalog-current {
-    padding-bottom: 20px;
+    padding: 10px;
+    margin: 10px;
 }
 
 .item {
@@ -29,7 +32,7 @@
 }
 
 .collection-header {
-    margin-bottom: 45px;
+    margin-bottom: 20px;
 }
 
 .collection-hero {
@@ -47,7 +50,7 @@
 }
 
 .catalog-sidebar{
-    padding-right: 0;
+    margin: 10px 0 10px 30px;
 }
 
 .sidebar-h2 {
@@ -56,35 +59,48 @@
     font-size: 20px;
 }
 
-.sidebar-ul {
+.form-container{
     margin-left: 11%;
-    list-style: none;
 }
 
-.sidebar-li {
-    list-style: none;
-    padding: 3px 0;
+.form-container label,
+.form-container input{
+    cursor: pointer;
+    margin-bottom: 6px;
     font-size: 15px;
 }
 
-.sidebar-a {
-    text-decoration: none;
-    color: black;
+.form-container input{
+    accent-color: #504f4f;
 }
 
-.sidebar-a:hover {
-    color: rgb(69, 67, 67);
+
+.form-container label:hover,
+.form-container input:hover{
+    color: #a9a7a7;
 }
 
-.catalog-grid {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    text-align: left;
+.clear-filter-btn{
+    cursor: pointer;
+    box-sizing: border-box;
+    border-color: rgb(0, 0, 0);
+    border: 1px solid #a9a7a7;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    font-weight: 1;
+    display: block;
+    margin: 5px;
+    margin-left: 1%;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: 20% auto;
+.catalog-flex {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
+}
+
+.flex-container {
+    display: flex;
 }
 
 .pagination {
