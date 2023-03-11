@@ -1,6 +1,4 @@
 .hid-div {
-    height: 0;
-    overflow-y: hidden;
     font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
     margin: 0;
     font-size: 13px;
@@ -165,6 +163,7 @@
     font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
+    cursor: pointer;
     font-size: 13px;
 }
 

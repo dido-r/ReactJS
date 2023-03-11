@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Product } from './Product';
 import styles from './style/Catalog.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export function Catalog() {
 
@@ -63,15 +65,16 @@ export function Catalog() {
                         src={bannerSrc} /></div>
                 </div>
             </div>
-            
-            {categoryType !== "all" && <button className={styles['clear-filter-btn']} onClick={onClearCategory}>x {categoryType}</button>}
-            {valueSize !== "all" && <button className={styles['clear-filter-btn']} onClick={onClearSize}>x {valueSize}</button>}
-            {valuePrice !== "all" && <button className={styles['clear-filter-btn']} onClick={onClearPrice}>x {valuePrice}</button>}
-            {(valueSize !== "all" || valuePrice !== "all" || categoryType !== "all") && <button className={styles['clear-filter-btn']} onClick={onClearAll}>Clear All</button>}
 
             <div className={styles['flex-container']}>
 
                 <div className={styles['catalog-sidebar']}>
+                    <div>
+                        {categoryType !== "all" && <span className={styles['inline-remove']}><FontAwesomeIcon className={styles['inline-icon']} icon={faXmark} /><button className={styles['clear-filter-btn']} onClick={onClearCategory}>{categoryType}</button></span>}
+                        {valueSize !== "all" && <span className={styles['inline-remove']}><FontAwesomeIcon className={styles['inline-icon']} icon={faXmark} /><button className={styles['clear-filter-btn']} onClick={onClearSize}>{valueSize}</button></span>}
+                        {valuePrice !== "all" && <span className={styles['inline-remove']}><FontAwesomeIcon className={styles['inline-icon']} icon={faXmark} /><button className={styles['clear-filter-btn']} onClick={onClearPrice}>{valuePrice}</button></span>}
+                        {(valueSize !== "all" || valuePrice !== "all" || categoryType !== "all") && <button className={styles['clear-filter-btn']} onClick={onClearAll}>Clear All</button>}
+                    </div>
                     <div>
                         <h2 className={styles['sidebar-h2']}> Categories</h2>
                     </div>

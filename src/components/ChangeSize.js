@@ -1,16 +1,22 @@
 import styles from './style/Details.module.css';
+import { useState } from 'react';
 
 export function ChangeSize() {
 
+    const [details, setDetails] = useState(false);
+    const [sizeChart, setSizeChart] = useState(false);
+    const [selectedSize, setSelectedSize] = useState("");
 
     function showSizeChart() {
-        let el = document.getElementById("tab2");
-        el.style.height === "" ? el.style.height = "180px" : el.style.height = "";
+        setSizeChart(!sizeChart);
     }
 
     function showMoreDetails() {
-        let el = document.getElementById("tab1");
-        el.style.height === "" ? el.style.height = "180px" : el.style.height = "";
+        setDetails(!details);
+    }
+
+    const onSizeSelect = (e) => {
+        setSelectedSize(e.target.value)
     }
 
     return (
@@ -23,7 +29,6 @@ export function ChangeSize() {
 
             <div className={styles['product-details']}>
                 <h2 className={styles['product-name']}>Product Name</h2>
-                <p className={styles['product-price']}>$788.00</p>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                     Ipsum has been
                     the industry's standard dummy text ever since the 1500s, when an unknown printer
@@ -31,29 +36,28 @@ export function ChangeSize() {
                     type and scrambled it to make a type specimen book.</p>
                 <h4>Choose a new size:</h4>
                 <form>
-                    <div className={styles['product-size']} >
-                    <div data-value="S" className={styles['swatch-element']}>
-                            <label className={styles['product-form-label']} >XS<input className={styles['swatch-input']} id="swatch-1-xs" type='radio' name="option-1"
-                                value="XS"/></label>
-                       </div>
-                        <div data-value="S" className={styles['swatch-element']}>
-                            <label className={styles['product-form-label']}>S<input className={styles['swatch-input']} id="swatch-1-s" type='radio' name="option-1"
-                                value="S"/></label>
+                <div className={styles['product-size']} >
+                        <div className={styles['swatch-element']}>
+                            <label style={selectedSize === "XS" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-1" className={styles['product-form-label']}>XS<input className={styles['swatch-input']} id="option-1" type='radio' name="option-size"
+                                value="XS" onChange={onSizeSelect} /></label>
                         </div>
-                        <div data-value="M" className={styles['swatch-element']}>
-                            <label className={styles['product-form-label']}>M<input className={styles['swatch-input']} id="swatch-1-m" type='radio' name="option-1"
-                                value="M" /></label>
+                        <div className={styles['swatch-element']}>
+                            <label style={selectedSize === "S" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-2" className={styles['product-form-label']}>S<input className={styles['swatch-input']} id="option-2" type='radio' name="option-size"
+                                value="S"  onChange={onSizeSelect}/></label>
+                        </div>
+                        <div className={styles['swatch-element']}>
+                            <label style={selectedSize === "M" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-3" className={styles['product-form-label']}>M<input className={styles['swatch-input']} id="option-3" type='radio' name="option-size"
+                                value="M" onChange={onSizeSelect}/></label>
                         </div>
                     </div>
-                    
                     <div className={styles['product-form-item-submit']}>
-                        <button type="button" name="add" className={styles['product-form-item-submit-btn']}>Add to cart</button>
+                        <button type="button" name="add" className={styles['product-form-item-submit-btn']}>Confirm size change</button>
                     </div>
                 </form>
                 <div className={styles['tab-container']}>
                     <p className={styles['acor-ttl']} onClick={() => showMoreDetails()}>Product
                         Details</p>
-                    <div id="tab1" className={styles['hid-div']}>
+                    {details && (<div id="tab1" className={styles['hid-div']}>
                         <div>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting
                                 industry. Lorem Ipsum has
@@ -71,10 +75,10 @@ export function ChangeSize() {
                                 <li>Lorem</li>
                             </ul>
                         </div>
-                    </div>
+                    </div>)}
                 </div>
                 <p className={styles['acor-ttl']} onClick={() => showSizeChart()}>Size Chart</p>
-                <div id="tab2" className={styles['hid-div']}>
+                {sizeChart && (<div id="tab2" className={styles['hid-div']}>
                     <table className={styles['size-chart']}>
                         <tbody>
                             <tr>
@@ -127,7 +131,7 @@ export function ChangeSize() {
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div>)}
             </div>
         </div>
     );

@@ -1,0 +1,26 @@
+.catalog-current {
+    padding: 10px;
+    margin: 10px;
+}
+
+.product-image {
+    display: inline-block;
+    width: 100%;
+    margin: 0 auto;
+    vertical-align: middle;
+    height: 250px;
+}
+
+.catalog-product-name {
+    text-decoration: none;
+    font-family: "Roboto Slab", Helvetica, Tahoma, Arial, serif;
+    font-weight: 1;
+    font-variant: small-caps;
+    color: #444444;
+}
+
+.ava-size {
+    font-family: "Roboto Slab", Helvetica, Tahoma, Arial, serif;
+    font-size: 12px;
+    max-width: 170px;
+}

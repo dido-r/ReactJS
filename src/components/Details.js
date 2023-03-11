@@ -1,32 +1,45 @@
+import { useState } from 'react';
+import { Modal } from './Modal';
 import styles from './style/Details.module.css';
 
 export function Details() {
 
+    const [modal, setModal] = useState(false);
+    const [details, setDetails] = useState(false);
+    const [sizeChart, setSizeChart] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+    const [selectedSize, setSelectedSize] = useState("");
+
+    const onAddToCard = () => {
+        //TO DO: ADD TO BASKET
+        setModal(true);
+    }
 
     function showSizeChart() {
-        let el = document.getElementById("tab2");
-        el.style.height === "" ? el.style.height = "180px" : el.style.height = "";
+        setSizeChart(!sizeChart);
     }
 
     function showMoreDetails() {
-        let el = document.getElementById("tab1");
-        el.style.height === "" ? el.style.height = "180px" : el.style.height = "";
+        setDetails(!details);
     }
 
     function increaseQty() {
-        let quantity = document.getElementById("Quantity");
-        quantity.value = Number(quantity.value) + 1;
+        setQuantity(quantity + 1);
     }
 
     function decreaseQty() {
-        let quantity = document.getElementById("Quantity");
-        quantity.value === "1" ? quantity.value = "1" : quantity.value = Number(quantity.value) - 1;
+        setQuantity(quantity === 1 ? 1 : quantity - 1);
+    }
+
+    const onSizeSelect = (e) => {
+        setSelectedSize(e.target.value)
     }
 
 
     return (
 
         <div className={styles['product-template-container']}>
+            {modal && <Modal modal={modal} setModal={setModal} />}
 
             <div className={styles['product-image']}>
                 <img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854614/collection2_vajifd.jpg" />
@@ -40,37 +53,37 @@ export function Details() {
                     the industry's standard dummy text ever since the 1500s, when an unknown printer
                     took a galley of
                     type and scrambled it to make a type specimen book.</p>
-                    
+
                 <form>
                     <div className={styles['product-size']} >
-                    <div data-value="S" className={styles['swatch-element']}>
-                            <label className={styles['product-form-label']} >XS<input className={styles['swatch-input']} id="swatch-1-xs" type='radio' name="option-1"
-                                value="XS"/></label>
-                       </div>
-                        <div data-value="S" className={styles['swatch-element']}>
-                            <label className={styles['product-form-label']}>S<input className={styles['swatch-input']} id="swatch-1-s" type='radio' name="option-1"
-                                value="S"/></label>
+                        <div className={styles['swatch-element']}>
+                            <label style={selectedSize === "XS" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-1" className={styles['product-form-label']}>XS<input className={styles['swatch-input']} id="option-1" type='radio' name="option-size"
+                                value="XS" onChange={onSizeSelect} /></label>
                         </div>
-                        <div data-value="M" className={styles['swatch-element']}>
-                            <label className={styles['product-form-label']}>M<input className={styles['swatch-input']} id="swatch-1-m" type='radio' name="option-1"
-                                value="M" /></label>
+                        <div className={styles['swatch-element']}>
+                            <label style={selectedSize === "S" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-2" className={styles['product-form-label']}>S<input className={styles['swatch-input']} id="option-2" type='radio' name="option-size"
+                                value="S"  onChange={onSizeSelect}/></label>
+                        </div>
+                        <div className={styles['swatch-element']}>
+                            <label style={selectedSize === "M" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-3" className={styles['product-form-label']}>M<input className={styles['swatch-input']} id="option-3" type='radio' name="option-size"
+                                value="M" onChange={onSizeSelect}/></label>
                         </div>
                     </div>
                     <div className={styles['wrapQtyBtn']}>
                         <div className={styles['qtyField']}>
                             <a className={styles['qtyBtn']} onClick={() => decreaseQty()} href="#"><i className={styles['fa']} aria-hidden="true">-</i></a>
-                            <input type="text" id="Quantity" name="quantity" defaultValue={1} className={styles['qty']} />
+                            <input type="text" id="Quantity" name="quantity" value={quantity} className={styles['qty']} onChange={() => { }} />
                             <a className={styles['qtyBtn']} onClick={() => increaseQty()} href="#"><i className={styles['fa']} aria-hidden="true">+</i></a>
                         </div>
                     </div>
                     <div className={styles['product-form-item-submit']}>
-                        <button type="button" name="add" className={styles['product-form-item-submit-btn']}>Add to cart</button>
+                        <button type="button" name="add" className={styles['product-form-item-submit-btn']} onClick={onAddToCard}>Add to cart</button>
                     </div>
                 </form>
                 <div className={styles['tab-container']}>
                     <p className={styles['acor-ttl']} onClick={() => showMoreDetails()}>Product
                         Details</p>
-                    <div id="tab1" className={styles['hid-div']}>
+                    {details && (<div id="tab1" className={styles['hid-div']}>
                         <div>
                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting
                                 industry. Lorem Ipsum has
@@ -88,10 +101,10 @@ export function Details() {
                                 <li>Lorem</li>
                             </ul>
                         </div>
-                    </div>
+                    </div>)}
                 </div>
                 <p className={styles['acor-ttl']} onClick={() => showSizeChart()}>Size Chart</p>
-                <div id="tab2" className={styles['hid-div']}>
+                {sizeChart && (<div id="tab2" className={styles['hid-div']}>
                     <table className={styles['size-chart']}>
                         <tbody>
                             <tr>
@@ -144,7 +157,7 @@ export function Details() {
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div>)}
             </div>
         </div>
     );

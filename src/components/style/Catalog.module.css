@@ -1,29 +1,13 @@
-.product-image {
-    display: inline-block;
-    width: 100%;
-    margin: 0 auto;
-    vertical-align: middle;
-    height: 250px;
+
+.inline-remove{
+    display: flex;
 }
 
-.catalog-product-name {
-    text-decoration: none;
-    font-family: "Roboto Slab", Helvetica, Tahoma, Arial, serif;
-    font-weight: 1;
-    font-variant: small-caps;
-    color: #444444;
+.inline-icon{
+   padding: 8px 8px 8px 0;
+   color: #504f4f;
 }
 
-.ava-size{
-    font-family: "Roboto Slab", Helvetica, Tahoma, Arial, serif;
-    font-size: 12px;
-    max-width: 170px;
-}
-
-.catalog-current {
-    padding: 10px;
-    margin: 10px;
-}
 
 .item {
     margin: 0 0 30px;
@@ -50,7 +34,8 @@
 }
 
 .catalog-sidebar{
-    margin: 10px 0 10px 30px;
+    margin: 10px 0 10px 40px;
+    width: 10%;
 }
 
 .sidebar-h2 {

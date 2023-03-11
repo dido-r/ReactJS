@@ -1,4 +1,4 @@
-import styles from './style/Catalog.module.css';
+import styles from './style/Product.module.css';
 
 export function Product({
     products,
@@ -29,15 +29,14 @@ export function Product({
                 return current.price > 300;
             }
         } else {
-            
+
             return true;
         }
     }
 
     return (
 
-        // products.filter(z => z.gender === gender).filter(z => categoryType !== "all" ? z.type === categoryType : z).filter(z => valueSize !== "all" ? z.size.includes(valueSize) : z).filter(x => filterList(x)).map(x => (
-            products.filter(x => x.gender === gender && (categoryType !== "all" ? x.type === categoryType : x) && (valueSize !== "all" ? x.size.includes(valueSize) : x) && filterList(x)).map(x => (
+        products.filter(x => x.gender === gender && (categoryType !== "all" ? x.type === categoryType : x) && (valueSize !== "all" ? x.size.includes(valueSize) : x) && filterList(x)).map(x => (
             <div key={x.objectId} className={styles['catalog-current']}>
                 <a href="#">
                     <img className={styles['product-image']} src={x.imgUrl} />

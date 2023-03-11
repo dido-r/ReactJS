@@ -20,7 +20,7 @@ function App() {
         <>
             <Header />
                 <main>
-                    <Catalog />
+                    <Faqs />
                 </main>
             <Footer />
         </>
