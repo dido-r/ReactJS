@@ -1,6 +1,7 @@
 import styles from './style/Footer.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faTwitter, faInstagram, faPinterest } from "@fortawesome/free-brands-svg-icons"
+import { Link } from 'react-router-dom';
 
 export function Footer() {
 
@@ -10,20 +11,20 @@ export function Footer() {
                 <div className={styles['footer-row-align']}>
                     <h4 className={styles['footer-h4']}>Useful Links</h4>
                     <ul className={styles['footer-ul']}>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">Home</a></li>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">About us</a></li>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">Terms of service</a></li>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">Privacy policy</a></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/">Home</Link></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/about">About us</Link></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/lorem">Terms of service</Link></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/lorem">Privacy policy</Link></li>
                     </ul>
                 </div>
 
                 <div className={styles['footer-row-align']}>
                     <h4 className={styles['footer-h4']}>Service</h4>
                     <ul className={styles['footer-ul']}>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">Customer service</a></li>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">Return policy</a></li>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">Shipping information</a></li>
-                        <li className={styles['footer-li']}><a className={styles['link-a']} href="#">FAQ</a></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/contacts">Customer service</Link></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/lorem">Return policy</Link></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/lorem">Shipping information</Link></li>
+                        <li className={styles['footer-li']}><Link className={styles['link-a']} to="/faqs">FAQ</Link></li>
                     </ul>
                 </div>
 

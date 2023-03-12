@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './style/Orders.module.css';
 
 export function Orders() {
@@ -25,24 +26,24 @@ export function Orders() {
                         <td><h4>Minerva Dress black</h4></td>
                         <td>$165.00</td>
                         <td>S</td>
-                        <td><a href="change.html" className={styles["return-order-btn"]}>Change</a></td>
-                        <td><a href="return.html" className={styles["remove-order-btn"]}>Return</a></td>
+                        <td><Link to="/changesize" className={styles["return-order-btn"]}>Change</Link></td>
+                        <td><button className={styles["remove-order-btn"]}>Return</button></td>
                     </tr>
                     <tr>
                         <td><img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854614/collection2_vajifd.jpg" alt="img" /></td>
                         <td><h4>Minerva Dress black</h4></td>
                         <td>$165.00</td>
                         <td>M</td>
-                        <td><a href="change.html" className={styles["return-order-btn"]}>Change</a></td>
-                        <td><a href="return.html" className={styles["remove-order-btn"]}>Return</a></td>
+                        <td><Link to="/changesize" className={styles["return-order-btn"]}>Change</Link></td>
+                        <td><button className={styles["remove-order-btn"]}>Return</button></td>
                     </tr>
                     <tr>
                         <td><img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854614/collection2_vajifd.jpg" alt="img" /></td>
                         <td><h4>Minerva Dress black</h4></td>
                         <td>$165.00</td>
                         <td>L</td>
-                        <td><a href="change.html" className={styles["return-order-btn"]}>Change</a></td>
-                        <td><a href="return.html" className={styles["remove-order-btn"]}>Return</a></td>
+                        <td><Link to="/changesize" className={styles["return-order-btn"]}>Change</Link></td>
+                        <td><button className={styles["remove-order-btn"]}>Return</button></td>
                     </tr>
                 </tbody>
             </table>

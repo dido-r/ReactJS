@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './style/Login.module.css';
 
 export function Register() {
@@ -13,7 +14,7 @@ export function Register() {
                 <div><input className={styles['login-input']} type="password" placeholder="repeat password" required="required" /></div>
                 <div><button type="submit" className={styles['login-btn']}>Sign in</button></div>
             </form>
-            <footer className={styles['small-text']}>Already have an account? <a className={styles['login-a']} href="#">Sign in here</a></footer>
+            <footer className={styles['small-text']}>Already have an account? <Link className={styles['login-a']} to="/login">Sign in here</Link></footer>
         </div>
     );
 }

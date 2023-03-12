@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './style/Home.module.css';
 
 export function Home() {
@@ -9,15 +10,13 @@ export function Home() {
 
             <section className={styles['home-section']}>
                 <div className={styles['icon-box']}>
-                    <img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/Jordan-women-apparel_szzqpm.jpg" />
-                    <h4 className={styles['home-title']}><a className={styles['home-a']} href="#">Women's apparel</a></h4>
-                    <button className={styles['home-btn']}>Buy now</button>
+                    <Link to="/catalog/women"><img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/Jordan-women-apparel_szzqpm.jpg" alt="" /></Link>
+                    <h4 className={styles['home-title']}><Link to="/catalog/women" className={styles['home-a']}>Women's apparel</Link></h4>
                 </div>
 
                 <div className={styles['icon-box']}>
-                    <img className={styles['man-img']} src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854616/Mens-UK-Blogger-Topman-Check-Trousers_nz9ial.jpg" />
-                    <h4 className={styles['home-title']}><a className={styles['home-a']} href="#">Men's apparel</a></h4>
-                    <button className={styles['home-btn']}>Buy now</button>
+                    <Link to="/catalog/men"><img className={styles['man-img']} src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854616/Mens-UK-Blogger-Topman-Check-Trousers_nz9ial.jpg" alt="" /></Link>
+                    <h4 className={styles['home-title']}><Link to="/catalog/men" className={styles['home-a']}>Men's apparel</Link></h4>
                 </div>
             </section>
         </>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './style/Product.module.css';
 
 export function Product({
@@ -38,11 +39,11 @@ export function Product({
 
         products.filter(x => x.gender === gender && (categoryType !== "all" ? x.type === categoryType : x) && (valueSize !== "all" ? x.size.includes(valueSize) : x) && filterList(x)).map(x => (
             <div key={x.objectId} className={styles['catalog-current']}>
-                <a href="#">
-                    <img className={styles['product-image']} src={x.imgUrl} />
-                </a>
+                <Link to={"details/"+ x.objectId}>
+                    <img className={styles['product-image']} src={x.imgUrl} alt="product"/>
+                </Link>
                 <div>
-                    <a href="#" className={styles['catalog-product-name']}>{x.name}</a>
+                    <Link to={"details/"+ x.objectId} className={styles['catalog-product-name']}>{x.name}</Link>
                 </div>
                 <div >
                     <span>${x.price}</span>

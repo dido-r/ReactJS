@@ -3,12 +3,13 @@ import { Product } from './Product';
 import styles from './style/Catalog.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { Link, useParams } from 'react-router-dom';
 
 export function Catalog() {
 
-    const gender = "Male";  //just for test
+    const {gender} = useParams();
     let bannerSrc = "";
-    gender === "Male" ? bannerSrc = "https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/BANNER-MENS-CLOTHING_outope.jpg" : bannerSrc = "https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/banner-home-alexinternational-WOMENS-CLOTHING_gmxjbn.jpg"
+    gender === "men" ? bannerSrc = "https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/BANNER-MENS-CLOTHING_outope.jpg" : bannerSrc = "https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/banner-home-alexinternational-WOMENS-CLOTHING_gmxjbn.jpg"
 
     const [products, setProducts] = useState([]);
     const [valuePrice, setValuePrice] = useState("all");
@@ -62,7 +63,7 @@ export function Catalog() {
             <div className={styles['collection-header']}>
                 <div className={styles['collection-hero']}>
                     <div className={styles['collection-hero-img-container']}><img className={styles['collection-hero-image']}
-                        src={bannerSrc} /></div>
+                        src={bannerSrc} alt=""/></div>
                 </div>
             </div>
 
@@ -80,7 +81,7 @@ export function Catalog() {
                     </div>
                     <div className={styles['form-container']}>
                         {
-                            gender === "Male" ?
+                            gender === "men" ?
                                 <form>
                                     <div><label htmlFor="Jackets"><input id="Jackets" name="category" type="radio" checked={categoryType === "Jackets"} value="Jackets" onChange={onChangeOfCategory} />Jackets</label></div>
                                     <div><label htmlFor="Hoodies"><input id="Hoodies" name="category" type="radio" checked={categoryType === "Hoodies"} value="Hoodies" onChange={onChangeOfCategory} />Hoodies</label></div>
@@ -131,8 +132,8 @@ export function Catalog() {
 
             <div className={styles['pagination']}>
                 <ul className={styles['pagination-ul']}>
-                    <li className={styles['pagination-li']}><a className={styles['pagination-a']} href="#">1</a></li>
-                    <li className={styles['pagination-li']}><a className={styles['pagination-a']} href="#">2</a></li>
+                    <li className={styles['pagination-li']}><Link className={styles['pagination-a']}>1</Link></li>
+                    <li className={styles['pagination-li']}><Link className={styles['pagination-a']}>2</Link></li>
                 </ul>
             </div>
         </>

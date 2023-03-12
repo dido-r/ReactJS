@@ -1,17 +1,48 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Modal } from './Modal';
 import styles from './style/Details.module.css';
 
-export function Details() {
+export function Details(
+    {
+        setBasket,
+        basket
+    }
+) {
 
     const [modal, setModal] = useState(false);
     const [details, setDetails] = useState(false);
     const [sizeChart, setSizeChart] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState("");
+    const [currentItem, setCurrentItem] = useState({ size: [] });
+    const { itemId } = useParams();
+
 
     const onAddToCard = () => {
-        //TO DO: ADD TO BASKET
+        
+        if(selectedSize === ""){
+            alert("Please select a size");
+            return;
+        }
+        
+        let isOrdered = basket.find(x => x.currentItem.objectId === itemId);
+
+        if (isOrdered !== undefined && isOrdered.selectedSize === selectedSize) {
+
+            setBasket(x => x.map(z => z.currentItem.objectId === itemId ? {
+                ...z,
+                quantity: z.quantity + quantity
+            } : z))
+
+        } else {
+
+            setBasket(x => [...x, {
+                currentItem,
+                quantity,
+                selectedSize
+            }])
+        }
         setModal(true);
     }
 
@@ -32,8 +63,22 @@ export function Details() {
     }
 
     const onSizeSelect = (e) => {
-        setSelectedSize(e.target.value)
+        setSelectedSize(e.target.value);
     }
+
+
+    useEffect(() => {
+
+        fetch(`https://parseapi.back4app.com/classes/Products?where=%7B%20%22objectId%22%3A%20%22${itemId}%22%7D`,
+            {
+                headers: {
+                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
+                }
+            })
+            .then(x => x.json())
+            .then(x => setCurrentItem(...x.results))
+    }, [itemId]);
 
 
     return (
@@ -41,13 +86,13 @@ export function Details() {
         <div className={styles['product-template-container']}>
             {modal && <Modal modal={modal} setModal={setModal} />}
 
-            <div className={styles['product-image']}>
-                <img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854614/collection2_vajifd.jpg" />
+            <div className={styles['img-container']}>
+                <img className={styles['product-image']} src={currentItem.imgUrl} alt=""/>
             </div>
 
             <div className={styles['product-details']}>
-                <h2 className={styles['product-name']}>Product Name</h2>
-                <p className={styles['product-price']}>$788.00</p>
+                <h2 className={styles['product-name']}>{currentItem.name}</h2>
+                <p className={styles['product-price']}>${currentItem.price}</p>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                     Ipsum has been
                     the industry's standard dummy text ever since the 1500s, when an unknown printer
@@ -56,24 +101,18 @@ export function Details() {
 
                 <form>
                     <div className={styles['product-size']} >
-                        <div className={styles['swatch-element']}>
-                            <label style={selectedSize === "XS" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-1" className={styles['product-form-label']}>XS<input className={styles['swatch-input']} id="option-1" type='radio' name="option-size"
-                                value="XS" onChange={onSizeSelect} /></label>
-                        </div>
-                        <div className={styles['swatch-element']}>
-                            <label style={selectedSize === "S" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-2" className={styles['product-form-label']}>S<input className={styles['swatch-input']} id="option-2" type='radio' name="option-size"
-                                value="S"  onChange={onSizeSelect}/></label>
-                        </div>
-                        <div className={styles['swatch-element']}>
-                            <label style={selectedSize === "M" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-3" className={styles['product-form-label']}>M<input className={styles['swatch-input']} id="option-3" type='radio' name="option-size"
-                                value="M" onChange={onSizeSelect}/></label>
-                        </div>
+                        {currentItem.size.map(x =>
+                            <div key={x} className={styles['swatch-element']}>
+                                <label style={selectedSize === x ? { border: "1px solid" } : { border: "none" }} htmlFor={x} className={styles['product-form-label']}>{x}<input className={styles['swatch-input']} id={x} type='radio' name="option-size"
+                                    value={x} onChange={onSizeSelect}/></label>
+                            </div>
+                        )}
                     </div>
                     <div className={styles['wrapQtyBtn']}>
                         <div className={styles['qtyField']}>
-                            <a className={styles['qtyBtn']} onClick={() => decreaseQty()} href="#"><i className={styles['fa']} aria-hidden="true">-</i></a>
+                            <Link className={styles['qtyBtn']} onClick={() => decreaseQty()}><i className={styles['fa']} aria-hidden="true">-</i></Link>
                             <input type="text" id="Quantity" name="quantity" value={quantity} className={styles['qty']} onChange={() => { }} />
-                            <a className={styles['qtyBtn']} onClick={() => increaseQty()} href="#"><i className={styles['fa']} aria-hidden="true">+</i></a>
+                            <Link className={styles['qtyBtn']} onClick={() => increaseQty()}><i className={styles['fa']} aria-hidden="true">+</i></Link>
                         </div>
                     </div>
                     <div className={styles['product-form-item-submit']}>

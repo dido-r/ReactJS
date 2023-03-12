@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export function Header() {
 
@@ -21,7 +22,13 @@ export function Header() {
     function dropMenuOne() {
         setDropMenu(!dropMenu);
     }
-    
+
+    function onRedirect() {
+        setNavView("0");
+        setUserNav("");
+        setDropMenu(false);
+    }
+
     return (
         <header>
             <div className={styles['logo']}>
@@ -30,27 +37,27 @@ export function Header() {
                 <h1 onClick={onUserClick} className={styles['pointer']}><FontAwesomeIcon icon={faUser} /></h1>
             </div>
 
-            <div id="myUsernav" className={styles['usernav']} style={{height: userNav}}>
-                <li><a href="#" className={styles['side-main-a']}>Orders</a></li>
-                <li><a href="#" className={styles['side-main-a']}>Checkout</a></li>
-                <li><a href="#" className={styles['side-main-a']}>Login</a></li>
+            <div id="myUsernav" className={styles['usernav']} style={{ height: userNav }}>
+                <li><Link to="/orders" className={styles['side-main-a']} onClick={onRedirect}>Orders</Link></li>
+                <li><Link to="/checkout" className={styles['side-main-a']} onClick={onRedirect}>Checkout</Link></li>
+                <li><Link to="/login" className={styles['side-main-a']} onClick={onRedirect}>Login</Link></li>
             </div>
 
-            <div id="mySidenav" className={styles['sidenav']} style={{width: navView}}>
-                <a href="#" className={styles['closebtn']} onClick={onNavClick}>&times;</a>
-                <li><a href="#" className={styles['side-main-a']}>Home</a></li>
-                <li><a href="#" className={styles['side-main-a']}>About</a></li>
-                <li><a href="#" onClick={() => dropMenuOne()} className={styles['side-main-a']}>Products</a></li>
+            <div id="mySidenav" className={styles['sidenav']} style={{ width: navView }}>
+                <p className={styles['closebtn']} onClick={onNavClick}>&times;</p>
+                <li><Link to="/" className={styles['side-main-a']} onClick={onRedirect}>Home</Link></li>
+                <li><Link to="/about" className={styles['side-main-a']} onClick={onRedirect}>About</Link></li>
+                <li><Link onClick={() => dropMenuOne()} className={styles['side-main-a']}>Products</Link></li>
                 {dropMenu && (<ul>
                     <li className={styles['dropdown']}>
-                        <a href="#" className={styles['main-a']}>Women</a>
+                        <Link to="/catalog/women" className={styles['main-a']} onClick={onRedirect}>Women</Link>
                     </li>
                     <li className={styles['dropdown']}>
-                        <a href="#" className={styles['main-a']}>Men</a>
+                        <Link to="/catalog/men" className={styles['main-a']} onClick={onRedirect}>Men</Link>
                     </li>
                 </ul>)}
-            
-                <li><a href="#" className={styles['side-main-a']}>Contact</a></li>
+
+                <li><Link to="/contacts" className={styles['side-main-a']} onClick={onRedirect}>Contact</Link></li>
             </div>
         </header>
     );

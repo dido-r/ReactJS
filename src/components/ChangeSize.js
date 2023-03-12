@@ -24,7 +24,7 @@ export function ChangeSize() {
         <div className={styles['product-template-container']}>
 
             <div className={styles['product-image']}>
-                <img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854614/collection2_vajifd.jpg" />
+                <img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854614/collection2_vajifd.jpg" alt=""/>
             </div>
 
             <div className={styles['product-details']}>

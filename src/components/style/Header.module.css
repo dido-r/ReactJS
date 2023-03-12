@@ -95,6 +95,7 @@ h1 {
 .closebtn:hover,
 .main-a:hover {
     color: #f1f1f1;
+    cursor: pointer;
 }
 
 .closebtn {
