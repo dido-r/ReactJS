@@ -1,15 +1,28 @@
 import styles from './style/Header.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faUser, faMagnifyingGlass, faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export function Header() {
+export function Header({user, setUser}) {
 
     const [navView, setNavView] = useState("0");
     const [userNav, setUserNav] = useState("");
     const [dropMenu, setDropMenu] = useState(false);
+    const [searchBar, setSearchInput] = useState(false);
+
+    function onSearchClick() {
+        setSearchInput(!searchBar);
+    }
+
+    function onSearchSubmit(e) {
+        e.preventDefault();
+        let form = new FormData(e.target);
+        let { searchInput } = Object.fromEntries(form);
+        console.log(searchInput)
+
+        // TO DO
+    }
 
     function onNavClick() {
         setNavView(navView === "0" ? "280px" : "0");
@@ -29,18 +42,34 @@ export function Header() {
         setDropMenu(false);
     }
 
+    const onLogout = () => {
+        onRedirect();
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('userLastName');
+        sessionStorage.removeItem('userFirsName');
+        setUser(false);
+    }
+
     return (
         <header>
             <div className={styles['logo']}>
-                <h1 onClick={onNavClick} className={styles['pointer']}><FontAwesomeIcon icon={faBars} /></h1>
+                <h1 onClick={onNavClick} className={styles['bar-icon']}><FontAwesomeIcon icon={faBars} /></h1>
                 <h1 className={styles['active-logo']}>Project Site</h1>
-                <h1 onClick={onUserClick} className={styles['pointer']}><FontAwesomeIcon icon={faUser} /></h1>
+                <h1 onClick={onSearchClick} className={styles['search-icon']}><FontAwesomeIcon icon={faMagnifyingGlass} /></h1>
+                {user ? 
+                <h1 onClick={onUserClick} className={styles['user-icon']}><FontAwesomeIcon icon={faUser} /></h1> :
+                <h1><Link to='/login' className={styles['user-icon']}><FontAwesomeIcon icon={faRightToBracket} /></Link></h1> }
+                
             </div>
+
+            
+            {searchBar && <form onSubmit={(e) => onSearchSubmit(e)}><input type="text" name="searchInput" className={styles['searchnav']} style={{ height: searchBar }}/></form>} 
+            
 
             <div id="myUsernav" className={styles['usernav']} style={{ height: userNav }}>
                 <li><Link to="/orders" className={styles['side-main-a']} onClick={onRedirect}>Orders</Link></li>
                 <li><Link to="/checkout" className={styles['side-main-a']} onClick={onRedirect}>Checkout</Link></li>
-                <li><Link to="/login" className={styles['side-main-a']} onClick={onRedirect}>Login</Link></li>
+                <li><Link to="/" className={styles['side-main-a']} onClick={onLogout}>Logout</Link></li>
             </div>
 
             <div id="mySidenav" className={styles['sidenav']} style={{ width: navView }}>

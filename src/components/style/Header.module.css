@@ -29,8 +29,15 @@ h1 {
     text-align: center;
 }
 
-.pointer {
+.user-icon,
+.bar-icon,
+.search-icon {
     cursor: pointer;
+    color: #fff;
+}
+
+.user-icon {
+    margin-left: 20px;
 }
 
 /*--------------------------------------------------------------
@@ -53,7 +60,7 @@ h1 {
 .usernav {
     height: 0;
     width: 12%;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     top: 0;
     right: 0;
@@ -62,6 +69,25 @@ h1 {
     transition: 0.5s;
     margin-top: 50px;
 }
+
+.searchnav {
+    width: 20%;
+    height: 22px;
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    right: 5px;
+    overflow-y: hidden;
+    margin-right: 100px;
+    padding: 10px;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    font-weight: 1;
+    color: #000000;
+    border-radius: 10px;
+}
+
 
 .dropdown,
 .sidenav,
