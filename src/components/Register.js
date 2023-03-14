@@ -37,7 +37,9 @@ export function Register() {
 
         let data = await res.json();
 
-        sessionStorage.setItem('userId', data.objectId);
+        localStorage.setItem('userId', data.objectId);
+        localStorage.setItem('userLastName', firstName);
+        localStorage.setItem('userFirsName', lastName);
         navigate('/');
     }
 

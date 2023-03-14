@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Modal } from './Modal';
 import styles from './style/Details.module.css';
 
@@ -17,9 +17,16 @@ export function Details(
     const [selectedSize, setSelectedSize] = useState("");
     const [currentItem, setCurrentItem] = useState({ size: [] });
     const { itemId } = useParams();
+    const navigate = useNavigate();
 
 
     const onAddToCard = () => {
+
+        if(localStorage.userId === undefined){
+
+            navigate('/login');
+            return;
+        }
         
         if(selectedSize === ""){
             alert("Please select a size");
@@ -43,6 +50,7 @@ export function Details(
                 selectedSize
             }])
         }
+        
         setModal(true);
     }
 

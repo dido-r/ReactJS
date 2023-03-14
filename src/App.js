@@ -14,11 +14,12 @@ import { Login } from './components/Login';
 import { Lorem } from './components/Lorem';
 import { Orders } from './components/Orders';
 import { Register } from './components/Register';
+import { Success } from './components/Success';
 
 function App() {
 
     const [basket, setBasket] = useState([]);
-    const [user, setUser] = useState(false);
+    const [user, setUser] = useState(localStorage.userId !== undefined ? true : false);
 
     return (
         <>
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/lorem" element={<Lorem />} />
                     <Route path="/orders" element={<Orders />} />
+                    <Route path="/successful-order" element={<Success />} />
                 </Routes>
             </main>
             <Footer />

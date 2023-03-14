@@ -20,10 +20,9 @@ export function Login({setUser}) {
         });
 
         let data = await res.json();
-        console.log(data);
-        sessionStorage.setItem('userId', data.objectId);
-        sessionStorage.setItem('userLastName', data.firstName);
-        sessionStorage.setItem('userFirsName', data.lastName);
+        localStorage.setItem('userId', data.objectId);
+        localStorage.setItem('userLastName', data.lastName);
+        localStorage.setItem('userFirstName', data.firstName);
         setUser(true);
         navigate(-1);
     }

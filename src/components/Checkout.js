@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styles from './style/Checkout.module.css';
 
 export function Checkout({
@@ -5,9 +6,10 @@ export function Checkout({
     setBasket
 }) {
 
+    const navigate = useNavigate();
+
     const onItemRemove = (id) => {
 
-        basket.map(x => console.log(x.currentItem.objectId + x.selectedSize))
         setBasket(x => x.filter(z => (z.currentItem.objectId + z.selectedSize) !== id));
         console.log(basket)
     }
@@ -28,10 +30,16 @@ export function Checkout({
                 "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(x)
+            body: JSON.stringify({...x, userId: sessionStorage.userId})
         }));
 
         setBasket([]);
+        navigate('/successful-order');
+    }
+
+    const onOrderChange = () => {
+
+
     }
 
     return (
@@ -82,9 +90,6 @@ export function Checkout({
                                     <label className={styles['billing-fields-label']}>Last Name</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>E-Mai</label>
-                                </div>
-                                <div className={styles['billing-fields']}>
                                     <label className={styles['billing-fields-label']}>Country</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
@@ -93,13 +98,10 @@ export function Checkout({
                             </div>
                             <div>
                                 <div>
-                                    <input className={styles['billing-fields-f']}></input>
+                                    <input className={styles['billing-fields-f']} value={sessionStorage.userFirstName} onChange={onOrderChange} />
                                 </div>
                                 <div>
-                                    <input className={styles['billing-fields-f']}></input>
-                                </div>
-                                <div>
-                                    <input className={styles['billing-fields-f']}></input>
+                                    <input className={styles['billing-fields-f']} value={sessionStorage.userLastName} onChange={onOrderChange} />
                                 </div>
                                 <div>
                                     <select className={styles['billing-fields-f']}>

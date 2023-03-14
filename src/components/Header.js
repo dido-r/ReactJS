@@ -29,7 +29,7 @@ export function Header({user, setUser}) {
     }
 
     function onUserClick() {
-        setUserNav(userNav === "" ? "22%" : ""); // diff for logged in and guest
+        setUserNav(userNav === "" ? "22%" : "");
     }
 
     function dropMenuOne() {
@@ -44,9 +44,9 @@ export function Header({user, setUser}) {
 
     const onLogout = () => {
         onRedirect();
-        sessionStorage.removeItem('userId');
-        sessionStorage.removeItem('userLastName');
-        sessionStorage.removeItem('userFirsName');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userLastName');
+        localStorage.removeItem('userFirsName');
         setUser(false);
     }
 
