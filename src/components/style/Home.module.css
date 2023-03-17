@@ -108,3 +108,17 @@
     width: 370px;
     height: 450px;
 }
+
+.slider-container{
+    margin-bottom: 30px;
+}
+
+.slider-container h2{
+    letter-spacing: 12px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-bottom: 1px solid #8d8d8e;
+    width: 50%;
+    margin: auto auto 30px auto;
+    text-align: center;
+    padding: 10px;
+}

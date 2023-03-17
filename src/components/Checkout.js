@@ -30,7 +30,7 @@ export function Checkout({
                 "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({...x, userId: sessionStorage.userId})
+            body: JSON.stringify({...x, userId: localStorage.userId})
         }));
 
         setBasket([]);

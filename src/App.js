@@ -31,7 +31,7 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/checkout" element={<Checkout basket={basket} setBasket={setBasket} />} />
                     <Route path="/contacts" element={<Contact />} />
-                    <Route path="/changesize" element={<ChangeSize />} />
+                    <Route path="/orders/change-size/:orderId/:itemId" element={<ChangeSize />} />
                     <Route path="/catalog/:gender/details/:itemId" element={<Details basket={basket} setBasket={setBasket} />} />
                     <Route path="/faqs" element={<Faqs />} />
                     <Route path="/login" element={<Login setUser={setUser} />} />

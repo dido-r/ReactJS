@@ -85,7 +85,8 @@ export function Details(
                 }
             })
             .then(x => x.json())
-            .then(x => setCurrentItem(...x.results))
+            .then(x => setCurrentItem(...x.results));
+
     }, [itemId]);
 
 

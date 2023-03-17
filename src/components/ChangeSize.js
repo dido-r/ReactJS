@@ -1,11 +1,16 @@
 import styles from './style/Details.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export function ChangeSize() {
 
     const [details, setDetails] = useState(false);
     const [sizeChart, setSizeChart] = useState(false);
     const [selectedSize, setSelectedSize] = useState("");
+    const [currentItem, setCurrentItem] = useState({ size: [] });
+    const [currentorder, setCurrentOrder] = useState({ size: [] });
+    const { orderId, itemId } = useParams();
+    const navigate = useNavigate();
 
     function showSizeChart() {
         setSizeChart(!sizeChart);
@@ -19,16 +24,61 @@ export function ChangeSize() {
         setSelectedSize(e.target.value)
     }
 
+    const onSizechange = () => {
+
+        getCurrentOrder();
+
+        fetch(`https://parseapi.back4app.com/classes/Orders/${orderId}`,
+            {
+                method: "PUT",
+                headers: {
+                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ...currentorder, selectedSize: selectedSize })
+            });
+
+        navigate('/orders');
+    }
+
+    const getCurrentOrder = () => {
+
+        fetch(`https://parseapi.back4app.com/classes/Orders?where=%7B%20%22objectId%22%3A%20%22${orderId}%22%7D`,
+            {
+                headers: {
+                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
+                }
+            })
+            .then(x => x.json())
+            .then(x => setCurrentOrder(...x.results))
+    }
+
+    useEffect(() => {
+
+        fetch(`https://parseapi.back4app.com/classes/Products?where=%7B%20%22objectId%22%3A%20%22${itemId}%22%7D`,
+            {
+                headers: {
+                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
+                }
+            })
+            .then(x => x.json())
+            .then(x => setCurrentItem(...x.results))
+
+    }, [itemId]);
+
     return (
 
         <div className={styles['product-template-container']}>
 
-            <div className={styles['product-image']}>
-                <img src="https://res.cloudinary.com/diby8tbnn/image/upload/v1677854614/collection2_vajifd.jpg" alt=""/>
+            <div className={styles['img-container']}>
+                <img className={styles['product-image']} src={currentItem.imgUrl} alt="" />
             </div>
 
             <div className={styles['product-details']}>
-                <h2 className={styles['product-name']}>Product Name</h2>
+                <h2 className={styles['product-name']}>{currentItem.name}</h2>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                     Ipsum has been
                     the industry's standard dummy text ever since the 1500s, when an unknown printer
@@ -36,22 +86,16 @@ export function ChangeSize() {
                     type and scrambled it to make a type specimen book.</p>
                 <h4>Choose a new size:</h4>
                 <form>
-                <div className={styles['product-size']} >
-                        <div className={styles['swatch-element']}>
-                            <label style={selectedSize === "XS" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-1" className={styles['product-form-label']}>XS<input className={styles['swatch-input']} id="option-1" type='radio' name="option-size"
-                                value="XS" onChange={onSizeSelect} /></label>
-                        </div>
-                        <div className={styles['swatch-element']}>
-                            <label style={selectedSize === "S" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-2" className={styles['product-form-label']}>S<input className={styles['swatch-input']} id="option-2" type='radio' name="option-size"
-                                value="S"  onChange={onSizeSelect}/></label>
-                        </div>
-                        <div className={styles['swatch-element']}>
-                            <label style={selectedSize === "M" ? {border: "1px solid"} : {border: "none"}}  htmlFor="option-3" className={styles['product-form-label']}>M<input className={styles['swatch-input']} id="option-3" type='radio' name="option-size"
-                                value="M" onChange={onSizeSelect}/></label>
-                        </div>
+                    <div className={styles['product-size']} >
+                        {currentItem.size.map(x =>
+                            <div key={x} className={styles['swatch-element']}>
+                                <label style={selectedSize === x ? { border: "1px solid" } : { border: "none" }} htmlFor={x} className={styles['product-form-label']}>{x}<input className={styles['swatch-input']} id={x} type='radio' name="option-size"
+                                    value={x} onChange={onSizeSelect} /></label>
+                            </div>
+                        )}
                     </div>
                     <div className={styles['product-form-item-submit']}>
-                        <button type="button" name="add" className={styles['product-form-item-submit-btn']}>Confirm size change</button>
+                        <button type="button" name="add" className={styles['product-form-item-submit-btn']} onClick={onSizechange}>Confirm size change</button>
                     </div>
                 </form>
                 <div className={styles['tab-container']}>
