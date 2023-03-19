@@ -1,11 +1,10 @@
-
-.inline-remove{
+.inline-remove {
     display: flex;
 }
 
-.inline-icon{
-   padding: 8px 8px 8px 0;
-   color: #504f4f;
+.inline-icon {
+    padding: 8px 8px 8px 0;
+    color: #504f4f;
 }
 
 
@@ -33,7 +32,7 @@
     width: 100%;
 }
 
-.catalog-sidebar{
+.catalog-sidebar {
     margin: 10px 0 10px 40px;
     width: 10%;
 }
@@ -44,28 +43,28 @@
     font-size: 20px;
 }
 
-.form-container{
+.form-container {
     margin-left: 11%;
 }
 
 .form-container label,
-.form-container input{
+.form-container input {
     cursor: pointer;
     margin-bottom: 6px;
     font-size: 15px;
 }
 
-.form-container input{
+.form-container input {
     accent-color: #504f4f;
 }
 
 
 .form-container label:hover,
-.form-container input:hover{
+.form-container input:hover {
     color: #a9a7a7;
 }
 
-.clear-filter-btn{
+.clear-filter-btn {
     cursor: pointer;
     box-sizing: border-box;
     border-color: rgb(0, 0, 0);
@@ -97,16 +96,12 @@
     margin-bottom: 30px;
 }
 
-.pagination-ul {
-    display: block;
-    text-indent: 3px;
-}
-
-.pagination-li {
+.pagination li {
     display: inline-block;
+    margin: 1px;
 }
 
-.pagination-a {
+.pagination a {
     font-size: 12px;
     height: 30px;
     width: 30px;
@@ -116,4 +111,24 @@
     color: #444444;
     vertical-align: middle;
     text-decoration: none;
+}
+
+.pagination a:hover {
+    cursor: pointer;
+}
+
+.selected{
+    border: 3px solid black;
+}
+
+.items-per-page {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5%;
+    font-weight: 1;
+    letter-spacing: 1px;
+}
+
+.select-items-per-page {
+    width: 40px;
 }

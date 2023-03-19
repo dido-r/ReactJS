@@ -1,45 +1,70 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './style/Checkout.module.css';
 
 export function Checkout({
     basket,
-    setBasket
+    setBasket,
+    basketId
 }) {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        fetch(`https://parseapi.back4app.com/classes/Baskets/${localStorage.basketId}`, {
+            headers: {
+                "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
+            }})
+            .then(x => x.json())
+            .then(x =>
+                setBasket(x.items)
+            );
+
+    }, [ setBasket]);
+
+
+
     const onItemRemove = (id) => {
+    
+        
+        let obj = [...basket].filter(z => (z.currentItem.objectId + z.selectedSize) !== id);
+
+        fetch(`https://parseapi.back4app.com/classes/Baskets/${localStorage.basketId}`, 
+            {
+                method: "PUT",
+                headers: {
+                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({userId: localStorage.userId, items: obj})
+            });
 
         setBasket(x => x.filter(z => (z.currentItem.objectId + z.selectedSize) !== id));
-        console.log(basket)
     }
 
     const onOrderSubmit = () => {
 
-       if(basket.length === 0){
+        if (basket.length === 0) {
 
-        alert("Your basket is empty");
-        return;
-       }
-       
+            alert("Your basket is empty");
+            return;
+        }
+
         basket.map(x => fetch("https://parseapi.back4app.com/classes/Orders",
-        {
-            method: "POST",
-            headers: {
-                "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({...x, userId: localStorage.userId})
-        }));
+            {
+                method: "POST",
+                headers: {
+                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ...x, userId: localStorage.userId })
+            }));
 
         setBasket([]);
         navigate('/successful-order');
-    }
-
-    const onOrderChange = () => {
-
-
     }
 
     return (
@@ -98,10 +123,10 @@ export function Checkout({
                             </div>
                             <div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} value={sessionStorage.userFirstName} onChange={onOrderChange} />
+                                    <input className={styles['billing-fields-f']} defaultValue={localStorage.userFirstName} />
                                 </div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} value={sessionStorage.userLastName} onChange={onOrderChange} />
+                                    <input className={styles['billing-fields-f']} defaultValue={localStorage.userLastName} />
                                 </div>
                                 <div>
                                     <select className={styles['billing-fields-f']}>

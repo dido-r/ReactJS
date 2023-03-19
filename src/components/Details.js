@@ -19,23 +19,28 @@ export function Details(
     const { itemId } = useParams();
     const navigate = useNavigate();
 
-
     const onAddToCard = () => {
 
-        if(localStorage.userId === undefined){
+        if (localStorage.userId === undefined) {
 
             navigate('/login');
             return;
         }
-        
-        if(selectedSize === ""){
+
+        if (selectedSize === "") {
             alert("Please select a size");
             return;
         }
-        
+
         let isOrdered = basket.find(x => x.currentItem.objectId === itemId);
+        let obj = [...basket];
 
         if (isOrdered !== undefined && isOrdered.selectedSize === selectedSize) {
+
+            obj.map(z => z.currentItem.objectId === itemId ? {
+                ...z,
+                quantity: z.quantity + quantity
+            } : z);
 
             setBasket(x => x.map(z => z.currentItem.objectId === itemId ? {
                 ...z,
@@ -44,13 +49,30 @@ export function Details(
 
         } else {
 
+            obj.push({
+                currentItem,
+                quantity,
+                selectedSize
+            });
+
             setBasket(x => [...x, {
                 currentItem,
                 quantity,
                 selectedSize
-            }])
+            }]);
         }
         
+        fetch(`https://parseapi.back4app.com/classes/Baskets/${localStorage.basketId}`, 
+            {
+                method: "PUT",
+                headers: {
+                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({userId: localStorage.userId, items: obj})
+            });
+
         setModal(true);
     }
 
@@ -96,7 +118,7 @@ export function Details(
             {modal && <Modal modal={modal} setModal={setModal} />}
 
             <div className={styles['img-container']}>
-                <img className={styles['product-image']} src={currentItem.imgUrl} alt=""/>
+                <img className={styles['product-image']} src={currentItem.imgUrl} alt="" />
             </div>
 
             <div className={styles['product-details']}>
@@ -113,7 +135,7 @@ export function Details(
                         {currentItem.size.map(x =>
                             <div key={x} className={styles['swatch-element']}>
                                 <label style={selectedSize === x ? { border: "1px solid" } : { border: "none" }} htmlFor={x} className={styles['product-form-label']}>{x}<input className={styles['swatch-input']} id={x} type='radio' name="option-size"
-                                    value={x} onChange={onSizeSelect}/></label>
+                                    value={x} onChange={onSizeSelect} /></label>
                             </div>
                         )}
                     </div>

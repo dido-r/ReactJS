@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './style/Login.module.css';
 
-export function Register() {
+export function Register({setUser}) {
     const navigate = useNavigate();
 
     const  onRegisterSubmit = async (e) => {
@@ -37,9 +37,22 @@ export function Register() {
 
         let data = await res.json();
 
+        fetch('https://parseapi.back4app.com/classes/Baskets', {
+            method: "POST",
+            headers: {
+                "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
+                "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({items: [], userId: data.objectId})
+        })
+        .then(x => x.json())
+        .then(x => localStorage.setItem("basketId", Object.assign(...x.results).objectId));
+
         localStorage.setItem('userId', data.objectId);
         localStorage.setItem('userLastName', firstName);
-        localStorage.setItem('userFirsName', lastName);
+        localStorage.setItem('userFirstName', lastName);
+        setUser(true)
         navigate('/');
     }
 
