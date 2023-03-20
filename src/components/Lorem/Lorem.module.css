@@ -1,0 +1,37 @@
+.lorem{
+    padding-top: 30px;
+}
+
+.lorem h2 {
+    text-align: center;
+}
+
+.lorem div {
+    color: #444;
+    box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+    padding: 20px 0 30px 0;
+    margin-bottom: 30px;
+    border: 1px solid #fff;
+    transition: all 0.3s ease-in-out;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.lorem div:hover {
+    border-color: #cfcece;
+}
+
+.lorem h3 {
+    text-align: center;
+    font-size: 20px;
+    color: #666;
+    font-weight: 700;
+}
+
+.lorem p {
+    text-align: justify;
+    line-height: 24px;
+    font-size: 14px;
+    margin-left: 5%;
+    margin-right: 5%;
+}

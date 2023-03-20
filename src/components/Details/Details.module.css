@@ -1,0 +1,191 @@
+.hid-div {
+    font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 1;
+    transition: 0.5s;
+}
+
+.size-chart-cell{
+    padding-right: 30px;
+}
+
+.size-chart-row{
+    text-align: left;
+}
+
+.size-chart{
+    padding-top: 20px;
+}
+
+.product-price {
+    color: #e95144 !important;
+    font-weight: bold;
+    font-size: 1.46154em;
+    padding-left: 3px;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+
+.product-form-label {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.product-template-container {
+    margin-top: 30px;
+    margin-left: 70px;
+    margin-right: 70px;
+    padding-bottom: 100px;
+    display: flex;
+}
+
+.product-details,
+.product-image{
+    margin-bottom: 50px;
+}
+
+.img-container{
+    margin-right: 3rem;
+}
+
+.product-image{
+   width: 500px;
+   height: auto;
+}
+
+.product-name{
+    font-family: "Roboto Slab", Helvetica, Tahoma, Arial, serif;
+    font-weight: 1;
+    font-variant: small-caps;
+}
+
+.swatch-element {
+    display: inline-block;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+
+.swatch-input:checked+.product-form-label { 
+    border: 1px solid #111111;
+    box-shadow: none;
+}
+
+.product-form-label,
+.swatch-input {
+    color: #333;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 28px;
+    text-transform: capitalize;
+    display: inline-block;
+    margin: 0;
+    min-width: 10px;
+    height: 30px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 0 10px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #ddd;
+    border-radius: 0;
+    -ms-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.swatch-input {
+    display: none;
+}
+
+.product-quantity {
+    float: left;
+    margin: 0 10px 10px 0;
+}
+
+.wrapQtyBtn {
+    float: left;
+    padding: 0;
+}
+
+.product-size{
+    margin-bottom: 10px;
+}
+
+
+.qtyField {
+    display: table;
+    margin-right: 30px;
+}
+
+
+.qtyBtn,
+.qty {
+    padding: 0;
+    width: 20px;
+    height: 35px;
+    border-radius: 0;
+    float: left;
+    cursor: pointer;
+}
+
+.qtyBtn {
+    background-color: #eee;
+    color: #000;
+    text-decoration: none;
+    
+}
+
+.fa {
+    font-size: 12px;
+    line-height: 21px;
+}
+
+.qtyBtn,
+.qty {
+    display: table-cell;
+    line-height: normal;
+    text-align: center;
+    padding: 3px 6px;
+    border: 1px solid #f5f5f5;
+}
+
+.product-form-item-submit {
+    width: auto;
+    overflow: hidden;
+}
+
+.product-form-item-submit-btn {
+    width: 100%;
+    padding: 6px 15px;
+    min-height: 42px;
+    background-color: #000;
+    color:#fff;
+    font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.acor-ttl {
+    display: block;
+    padding-bottom: 5px;
+    position: relative;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #a0a1a3;
+    font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
+    margin: 0;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.tab-container {
+    padding: 30px 0;
+    text-align: left;
+}
