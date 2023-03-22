@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Modal } from '../Modal/Modal';
 import styles from './Details.module.css';
+import { put, get } from '../../services/api';
 
 export function Details(
     {
@@ -19,7 +20,7 @@ export function Details(
     const { itemId } = useParams();
     const navigate = useNavigate();
 
-    const onAddToCard = () => {
+    const onAddToCard = async () => {
 
         if (localStorage.userId === undefined) {
 
@@ -61,17 +62,15 @@ export function Details(
                 selectedSize
             }]);
         }
-        
-        fetch(`https://parseapi.back4app.com/classes/Baskets/${localStorage.basketId}`, 
-            {
-                method: "PUT",
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({userId: localStorage.userId, items: obj})
-            });
+
+        try {
+
+            await put(`classes/Baskets/${localStorage.basketId}`, { userId: localStorage.userId, items: obj });
+
+        } catch (err) {
+
+            return alert(err.message)
+        }
 
         setModal(true);
     }
@@ -99,15 +98,12 @@ export function Details(
 
     useEffect(() => {
 
-        fetch(`https://parseapi.back4app.com/classes/Products?where=%7B%20%22objectId%22%3A%20%22${itemId}%22%7D`,
-            {
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
-                }
-            })
-            .then(x => x.json())
-            .then(x => setCurrentItem(...x.results));
+        async function fetchData() {
+
+            const response = await get(`classes/Products?where=%7B%20%22objectId%22%3A%20%22${itemId}%22%7D`);
+            setCurrentItem(...response.results);
+        }
+        fetchData();
 
     }, [itemId]);
 

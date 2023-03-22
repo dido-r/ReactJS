@@ -3,44 +3,27 @@ import { Link } from 'react-router-dom';
 import styles from './Orders.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
+import { del, get } from '../../services/api';
 
 export function Orders() {
 
     const [orders, setOrders] = useState([]);
 
-    const onOrderReturn = (orderId) => {
+    const onOrderReturn = async (orderId) => {
 
-        let output = window.confirm('yes');
-
-        if (output) {
-
-            if (output) {
-
-                fetch(`https://parseapi.back4app.com/classes/Orders/${orderId}`,
-                    {   
-                        method: "DELETE",
-                        headers: {
-                            "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                            "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
-                        }
-                    })
-
-                    setOrders(orders.filter(x => x.objectId !== orderId));
-            }
-        }
+        await del(`classes/Orders/${orderId}`)
+        setOrders(orders.filter(x => x.objectId !== orderId));
     }
 
     useEffect(() => {
 
-        fetch(`https://parseapi.back4app.com/classes/Orders?where=%7B%20%22userId%22%3A%20%22${localStorage.userId}%22%7D`,
-            {
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
-                }
-            })
-            .then(x => x.json())
-            .then(x => setOrders(x.results))
+        async function fetchData() {
+
+            const response = await get(`classes/Orders?where=%7B%20%22userId%22%3A%20%22${localStorage.userId}%22%7D`);
+            setOrders(response.results);
+        }
+        fetchData();
+
     }, []);
 
     return (

@@ -1,6 +1,7 @@
 import styles from './Contact.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
+import { Map } from './Map/Map';
 
 export function Contact() {
     
@@ -11,6 +12,9 @@ export function Contact() {
                 <FontAwesomeIcon className={styles['contact-icons']} icon={faLocationDot} />
                 <h3>Our Address</h3>
                 <p>Ruse, Bulgaria</p>
+                <div className={styles['map']}>
+                    <Map />
+                </div>
             </div>
             <div className={styles['info-box']}>
                 <FontAwesomeIcon className={styles['contact-icons']} icon={faEnvelope} />

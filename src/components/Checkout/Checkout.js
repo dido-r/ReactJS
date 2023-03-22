@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Checkout.module.css';
+import { get, put, post } from '../../services/api';
 
 export function Checkout({
     basket,
@@ -11,37 +12,26 @@ export function Checkout({
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`https://parseapi.back4app.com/classes/Baskets/${localStorage.basketId}`, {
-            headers: {
-                "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-            }})
-            .then(x => x.json())
-            .then(x =>
-                setBasket(x.items)
-            );
+
+        async function fetchData() {
+
+            const response = await get(`classes/Baskets/${localStorage.basketId}`);
+            setBasket(response.items);
+        }
+        fetchData();
 
     }, [ setBasket]);
 
-
-
-    const onItemRemove = (id) => {
-    
+    const onItemRemove = async (id) => {
         
         let obj = [...basket].filter(z => (z.currentItem.objectId + z.selectedSize) !== id);
-
-        fetch(`https://parseapi.back4app.com/classes/Baskets/${localStorage.basketId}`, 
-            {
-                method: "PUT",
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({userId: localStorage.userId, items: obj})
-            });
-
+        await put(`classes/Baskets/${localStorage.basketId}`, {userId: localStorage.userId, items: obj});
         setBasket(x => x.filter(z => (z.currentItem.objectId + z.selectedSize) !== id));
+    }
+
+    async function fetchData(x) {
+
+        await post(`classes/Orders`, { ...x, userId: localStorage.userId });
     }
 
     const onOrderSubmit = () => {
@@ -52,17 +42,7 @@ export function Checkout({
             return;
         }
 
-        basket.map(x => fetch("https://parseapi.back4app.com/classes/Orders",
-            {
-                method: "POST",
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ ...x, userId: localStorage.userId })
-            }));
-
+        basket.map(x => fetchData(x));
         setBasket([]);
         navigate('/successful-order');
     }

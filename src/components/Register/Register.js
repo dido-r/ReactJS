@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { post } from '../../services/api';
 import styles from './Register.module.css';
 
 export function Register({setUser}) {
@@ -24,31 +25,9 @@ export function Register({setUser}) {
             password
         }
 
-        let res = await fetch('https://parseapi.back4app.com/users', {
-            method: "POST",
-            headers: {
-                "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-                "X-Parse-Revocable-Session": "1",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(obj)
-        });
-
-        let data = await res.json();
-
-        fetch('https://parseapi.back4app.com/classes/Baskets', {
-            method: "POST",
-            headers: {
-                "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({items: [], userId: data.objectId})
-        })
-        .then(x => x.json())
-        .then(x => localStorage.setItem("basketId", Object.assign(...x.results).objectId));
-
+        const data = await post('users', obj);
+        const response = await post('classes/Baskets', {items: [], userId: data.objectId});
+        localStorage.setItem("basketId", response.objectId);
         localStorage.setItem('userId', data.objectId);
         localStorage.setItem('userLastName', firstName);
         localStorage.setItem('userFirstName', lastName);

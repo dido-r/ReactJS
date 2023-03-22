@@ -76,3 +76,8 @@
     font-size: 13px;
     padding: 10px 24px;
 }
+
+.map{
+    display: flex;
+    justify-content: center;
+}

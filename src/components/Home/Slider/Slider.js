@@ -1,41 +1,39 @@
 import styles from './Slider.module.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { get } from '../../../services/api';
 
 export function Slider({ gender }) {
 
-    const [activeSlide, setActiveSlide] = useState(1);
-    const [activeDot, setActiveDot] = useState(1);
+    const [offset, setOffset] = useState(0);
+    const [activeDot, setActiveDot] = useState(0);
     const [trendItems, setTrendItems] = useState([]);
 
     const onChoose = (prop) => {
 
         if (prop === "next") {
 
-            activeSlide === 3 ? setActiveSlide(1) : setActiveSlide(x => x + 1);
-            activeDot === 3 ? setActiveDot(1) : setActiveDot(x => x + 1);
+            offset === 6 ? setOffset(0) : setOffset(x => x + 3);
+            activeDot === 6 ? setActiveDot(0) : setActiveDot(x => x + 3);
 
         } else if (prop === "prev") {
 
-            activeSlide === 1 ? setActiveSlide(3) : setActiveSlide(x => x - 1);
-            activeDot === 1 ? setActiveDot(3) : setActiveDot(x => x - 1);
+            offset === 0 ? setOffset(6) : setOffset(x => x - 3);
+            activeDot === 0 ? setActiveDot(6) : setActiveDot(x => x - 3);
         } else {
 
-            setActiveSlide(prop);
+            setOffset(prop)
             setActiveDot(prop)
         }
     }
 
     useEffect(() => {
+        async function fetchData() {
 
-        fetch(`https://parseapi.back4app.com/classes/Products?where=%7B%20%22gender%22%3A%20%22${gender}%22%7D`, {
-            headers: {
-                "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-            }
-        })
-            .then(x => x.json())
-            .then(x => setTrendItems(x.results.slice(x.results.length - 9, x.results.length)));
+            const response = await get(`classes/Products?where=%7B%20%22gender%22%3A%20%22${gender}%22%7D`);
+            setTrendItems(response.results.slice(response.results.length - 9, response.results.length));
+        }
+        fetchData();
 
     }, [gender]);
 
@@ -43,38 +41,16 @@ export function Slider({ gender }) {
         <div>
             <div className={styles['slideshow-container']}>
 
-                {activeSlide === 1 && <div className={`${styles['mySlides']} ${styles['fade']}}`}>
+               
+                <div className={`${styles['mySlides']} ${styles['fade']}}`}>
 
-                    {trendItems.slice(0, 3).map(x =>
+                    {trendItems.slice(offset, offset + 3).map(x =>
                         <div key={x.objectId} className={styles['item-container']}>
                             <Link to={`/catalog/${gender}/details/${x.objectId}`}><img src={x.imgUrl} alt="" /></Link>
                             <p>{x.name}</p>
                         </div>
                     )}
                 </div>
-                }
-
-                {activeSlide === 2 && <div className={`${styles['mySlides']} ${styles['fade']}}`}>
-
-                    {trendItems.slice(3, 6).map(x =>
-                        <div key={x.objectId} className={styles['item-container']}>
-                            <Link to={`/catalog/${gender}/details/${x.objectId}`}><img src={x.imgUrl} alt="" /></Link>
-                            <p>{x.name}</p>
-                        </div>
-                    )}
-
-                </div>}
-
-                {activeSlide === 3 && <div className={`${styles['mySlides']} ${styles['fade']}}`}>
-
-                    {trendItems.slice(6, 9).map(x =>
-                        <div key={x.objectId} className={styles['item-container']}>
-                            <Link to={`/catalog/${gender}/details/${x.objectId}`}><img src={x.imgUrl} alt="" /></Link>
-                            <p>{x.name}</p>
-                        </div>
-                    )}
-                </div>}
-
 
                 <p className={styles['prev']} onClick={() => onChoose("prev")}>&#10094;</p>
                 <p className={styles['next']} onClick={() => onChoose("next")}>&#10095;</p>
@@ -83,9 +59,9 @@ export function Slider({ gender }) {
 
 
             <div className={styles['dot-container']}>
-                <span className={`${styles['dot']} ${activeDot === 1 && styles['active']}`} onClick={() => onChoose(1)}></span>
-                <span className={`${styles['dot']} ${activeDot === 2 && styles['active']}`} onClick={() => onChoose(2)}></span>
+                <span className={`${styles['dot']} ${activeDot === 0 && styles['active']}`} onClick={() => onChoose(0)}></span>
                 <span className={`${styles['dot']} ${activeDot === 3 && styles['active']}`} onClick={() => onChoose(3)}></span>
+                <span className={`${styles['dot']} ${activeDot === 6 && styles['active']}`} onClick={() => onChoose(6)}></span>
             </div>
         </div>
     );

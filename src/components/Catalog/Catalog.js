@@ -4,6 +4,7 @@ import styles from './Catalog.module.css';
 import { useParams } from 'react-router-dom';
 import { CatalogSidebar } from './CatalogSidebar/CatalogSidebar';
 import ReactPaginate from 'react-paginate';
+import { get } from '../../services/api';
 
 export function Catalog() {
 
@@ -29,15 +30,13 @@ export function Catalog() {
     }
 
     useEffect(() => {
-        fetch('https://parseapi.back4app.com/classes/Products',
-            {
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
-                }
-            })
-            .then(x => x.json())
-            .then(x => setProducts(x.results))
+
+        async function fetchData() {
+
+            const response = await get('classes/Products');
+            setProducts(response.results);
+        }
+        fetchData();
 
         setPageCount(Math.ceil(products.length / itemsPerPage));
     }, [products.length, itemsPerPage]);
