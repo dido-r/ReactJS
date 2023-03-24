@@ -1,0 +1,19 @@
+.hid-div {
+    font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 1;
+    transition: 0.5s;
+}
+
+.size-chart {
+    padding-top: 20px;
+}
+
+.size-chart td {
+    padding-right: 30px;
+}
+
+.size-chart th {
+    text-align: left;
+}

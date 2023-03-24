@@ -64,7 +64,7 @@ export function Header({ user, setUser }) {
             </div>
 
 
-            {searchBar && <form onSubmit={(e) => onSearchSubmit(e)}><input type="text" name="searchInput" className={styles['searchnav']} /></form>}
+            {searchBar && <form onSubmit={(e) => onSearchSubmit(e)}><input autoFocus type="text" name="searchInput" className={styles['searchnav']} /></form>}
 
 
             <div id="myUsernav" className={styles['usernav']} style={{ height: userNav }}>

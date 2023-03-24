@@ -19,31 +19,31 @@ export function Product({
 
     const sortList = useCallback((current) => {
 
-        if(sortCreteria === "A - Z"){
+        if (sortCreteria === "A - Z") {
 
             return current.sort((a, b) => a.name.localeCompare(b.name));
 
-        }else if(sortCreteria === "Z - A"){
+        } else if (sortCreteria === "Z - A") {
 
             return current.sort((a, b) => b.name.localeCompare(a.name));
 
-        }else if(sortCreteria === "Price Low to High"){
+        } else if (sortCreteria === "Price Low to High") {
 
             return current.sort((a, b) => a.price - b.price);
-            
-        }else if(sortCreteria === "Price High to Low"){
+
+        } else if (sortCreteria === "Price High to Low") {
 
             return current.sort((a, b) => b.price - a.price);
-            
-        }else if(sortCreteria === "Newest"){
+
+        } else if (sortCreteria === "Newest") {
 
             return current.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-            
-        }else{
+
+        } else {
 
             return current
         }
-    },[sortCreteria]);
+    }, [sortCreteria]);
 
     const filterList = useCallback((current) => {
 
@@ -81,49 +81,32 @@ export function Product({
             setCurrentItems(products
                 .filter(x => x.name.toLowerCase().includes(params.split('-')[1].toLowerCase()))
                 .filter(x => (gender !== null ? x.gender === gender : x) && (categoryType !== "all" ? x.type === categoryType : x) && (valueSize !== "all" ? x.size.includes(valueSize) : x) && filterList(x)));
-                
+
         setPageCount(Math.ceil(currentItems.length / itemsPerPage));
     }, [categoryType, currentItems.length, gender, itemsPerPage, offset, params, products, setPageCount, valueSize, filterList]);
-    
-    
+
+
     return (
 
-        params === 'men' || params === 'women' ?
-
+        currentItems.length !== 0 
+        ?
         sortList(currentItems).slice(offset, offset + itemsPerPage).map(x => (
-                <div key={x.objectId} className={styles['catalog-current']}>
-                    <Link to={"details/" + x.objectId}>
-                        <img className={styles['product-image']} src={x.imgUrl} alt="product" />
-                    </Link>
-                    <div>
-                        <Link to={"details/" + x.objectId} className={styles['catalog-product-name']}>{x.name}</Link>
-                    </div>
-                    <div >
-                        <span>${x.price}</span>
-                    </div>
-                    <div className={styles['ava-size']}>
-                        Available sizes: {x.size.join(', ')}
-                    </div>
+            <div key={x.objectId} className={styles['catalog-current']}>
+                <Link to={"details/" + x.objectId}>
+                    <img className={styles['product-image']} src={x.imgUrl} alt="product" />
+                </Link>
+                <div>
+                    <Link to={"details/" + x.objectId} className={styles['catalog-product-name']}>{x.name}</Link>
                 </div>
-            ))
-            :
-
-            sortList(currentItems).slice(offset, offset + itemsPerPage).map(x => (
-                    <div key={x.objectId} className={styles['catalog-current']}>
-                        <Link to={"details/" + x.objectId}>
-                            <img className={styles['product-image']} src={x.imgUrl} alt="product" />
-                        </Link>
-                        <div>
-                            <Link to={"details/" + x.objectId} className={styles['catalog-product-name']}>{x.name}</Link>
-                        </div>
-                        <div >
-                            <span>${x.price}</span>
-                        </div>
-                        <div className={styles['ava-size']}>
-                            Available sizes: {x.size.join(', ')}
-                        </div>
-                    </div>
-                ))
-
+                <div >
+                    <span>${x.price}</span>
+                </div>
+                <div className={styles['ava-size']}>
+                    Available sizes: {x.size.join(', ')}
+                </div>
+            </div>
+        ))
+        :
+        <h3 className={styles['no-products']}>No items found!</h3>
     );
 }

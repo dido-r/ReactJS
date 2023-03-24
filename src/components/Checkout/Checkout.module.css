@@ -15,7 +15,7 @@
     grid-column-end: 3;
 }
 
-.order-table-th {
+.check-table th {
     background-color: #fff;
     font-size: 13px;
     padding: 8px 5px 5px;
@@ -34,7 +34,7 @@
     margin-bottom: 50px;
 }
 
-.order-table-td {
+.check-table td {
     font-size: 13px;
     padding: 8px 5px 5px;
     width: 10%;
@@ -52,11 +52,12 @@
     font-weight: 1;
 }
 
-.billing-fields-label {
+.check-container label {
     margin-bottom: 50px;
 }
 
-.billing-fields-f {
+.check-container input,
+.check-container select {
     margin: 3px;
     font-family: inherit;
     font-size: inherit;

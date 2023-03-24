@@ -5,8 +5,7 @@ import { get, put, post } from '../../services/api';
 
 export function Checkout({
     basket,
-    setBasket,
-    basketId
+    setBasket
 }) {
 
     const navigate = useNavigate();
@@ -54,22 +53,22 @@ export function Checkout({
                 <table className={styles['check-table']}>
                     <thead>
                         <tr>
-                            <th className={styles['order-table-th']}>Product Name</th>
-                            <th className={styles['order-table-th']}>Price</th>
-                            <th className={styles['order-table-th']}>Size</th>
-                            <th className={styles['order-table-th']}>Qty</th>
-                            <th className={styles['order-table-th']}>Subtotal</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Size</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
                         {basket.map(x =>
                             <tr key={x.currentItem.objectId + x.selectedSize}>
-                                <td className={styles['order-table-td']}>{x.currentItem.name}</td>
-                                <td className={styles['order-table-td']}>${x.currentItem.price}</td>
-                                <td className={styles['order-table-td']}>{x.selectedSize}</td>
-                                <td className={styles['order-table-td']}>{x.quantity}</td>
-                                <td className={styles['order-table-td']}>${x.currentItem.price * x.quantity}</td>
-                                <td className={styles['order-table-td']}><button className={styles['btn-rem']} onClick={() => onItemRemove(x.currentItem.objectId + x.selectedSize)}>x</button></td>
+                                <td>{x.currentItem.name}</td>
+                                <td>${x.currentItem.price}</td>
+                                <td>{x.selectedSize}</td>
+                                <td>{x.quantity}</td>
+                                <td>${x.currentItem.price * x.quantity}</td>
+                                <td><button className={styles['btn-rem']} onClick={() => onItemRemove(x.currentItem.objectId + x.selectedSize)}>x</button></td>
                             </tr>
 
                         )}
@@ -77,8 +76,8 @@ export function Checkout({
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td className={styles['order-table-td']}>Total</td>
-                            <td className={styles['order-table-td']}>${basket.reduce((init, x) => init + x.currentItem.price * x.quantity, 0)}</td>
+                            <td>Total</td>
+                            <td>${basket.reduce((init, x) => init + x.currentItem.price * x.quantity, 0)}</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -89,27 +88,27 @@ export function Checkout({
                             <h3 className={styles['cust-head']}>Billing details</h3>
                             <div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>First name</label>
+                                    <label>First name</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>Last Name</label>
+                                    <label>Last Name</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>Country</label>
+                                    <label>Country</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>Address</label>
+                                    <label>Address</label>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} defaultValue={localStorage.userFirstName} />
+                                    <input defaultValue={localStorage.userFirstName} />
                                 </div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} defaultValue={localStorage.userLastName} />
+                                    <input defaultValue={localStorage.userLastName} />
                                 </div>
                                 <div>
-                                    <select className={styles['billing-fields-f']}>
+                                    <select>
                                         <option value=""> --- Please Select --- </option>
                                         <option value="244">Aaland Islands</option>
                                         <option value="1">Afghanistan</option>
@@ -121,7 +120,7 @@ export function Checkout({
                                     </select>
                                 </div>
                                 <div>
-                                    <input className={styles['billing-fields-f']}></input>
+                                    <input></input>
                                 </div>
                             </div>
                         </form>
@@ -130,27 +129,27 @@ export function Checkout({
                             <h3 className={styles['cust-head']}>Payment Information</h3>
                             <div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>Card Name </label>
+                                    <label>Card Name </label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>Credit Card Type</label>
+                                    <label>Credit Card Type</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>Card Number</label>
+                                    <label>Card Number</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>CVV</label>
+                                    <label>CVV</label>
                                 </div>
                                 <div className={styles['billing-fields']}>
-                                    <label className={styles['billing-fields-label']}>Expiration Date</label>
+                                    <label>Expiration Date</label>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} placeholder="Card Name" />
+                                    <input placeholder="Card Name" />
                                 </div>
                                 <div>
-                                    <select className={styles['billing-fields-f']}>
+                                    <select>
                                         <option value=""> --- Please Select --- </option>
                                         <option value="1">American Express</option>
                                         <option value="2">Visa Card</option>
@@ -159,13 +158,13 @@ export function Checkout({
                                     </select>
                                 </div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} placeholder="Credit Card Number" />
+                                    <input placeholder="Credit Card Number" />
                                 </div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} placeholder="CVV" />
+                                    <input placeholder="CVV" />
                                 </div>
                                 <div>
-                                    <input className={styles['billing-fields-f']} type="date" />
+                                    <input type="date" />
                                 </div>
                             </div>
                         </div>
