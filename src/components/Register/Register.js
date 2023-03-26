@@ -36,11 +36,12 @@ export function Register({ setUser }) {
 
         const data = await post('users', obj);
         const response = await post('classes/Baskets', { items: [], userId: data.objectId });
-        localStorage.setItem("basketId", response.objectId);
-        localStorage.setItem('userId', data.objectId);
-        localStorage.setItem('userLastName', values.firstName);
-        localStorage.setItem('userFirstName', values.lastName);
-        setUser(true)
+        setUser({
+            basketId: response.objectId,
+            userId: data.objectId,
+            userLastName: values.firstName,
+            userFirstName: values.lastName
+        })
         navigate('/');
     }
 

@@ -5,7 +5,8 @@ import { get, put, post } from '../../services/api';
 
 export function Checkout({
     basket,
-    setBasket
+    setBasket,
+    user
 }) {
 
     const navigate = useNavigate();
@@ -14,23 +15,23 @@ export function Checkout({
 
         async function fetchData() {
 
-            const response = await get(`classes/Baskets/${localStorage.basketId}`);
+            const response = await get(`classes/Baskets/${user.basketId}`);
             setBasket(response.items);
         }
         fetchData();
 
-    }, [ setBasket]);
+    }, [ setBasket, user.basketId]);
 
     const onItemRemove = async (id) => {
         
         let obj = [...basket].filter(z => (z.currentItem.objectId + z.selectedSize) !== id);
-        await put(`classes/Baskets/${localStorage.basketId}`, {userId: localStorage.userId, items: obj});
+        await put(`classes/Baskets/${user.basketId}`, {userId: user.userId, items: obj});
         setBasket(x => x.filter(z => (z.currentItem.objectId + z.selectedSize) !== id));
     }
 
     async function fetchData(x) {
 
-        await post(`classes/Orders`, { ...x, userId: localStorage.userId });
+        await post(`classes/Orders`, { ...x, userId: user.userId });
     }
 
     const onOrderSubmit = () => {
@@ -102,10 +103,10 @@ export function Checkout({
                             </div>
                             <div>
                                 <div>
-                                    <input defaultValue={localStorage.userFirstName} />
+                                    <input defaultValue={user.userFirstName} />
                                 </div>
                                 <div>
-                                    <input defaultValue={localStorage.userLastName} />
+                                    <input defaultValue={user.userLastName} />
                                 </div>
                                 <div>
                                     <select>

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
 import { del, get } from '../../services/api';
 
-export function Orders() {
+export function Orders({user}) {
 
     const [orders, setOrders] = useState([]);
 
@@ -19,12 +19,12 @@ export function Orders() {
 
         async function fetchData() {
 
-            const response = await get(`classes/Orders?where=%7B%20%22userId%22%3A%20%22${localStorage.userId}%22%7D`);
+            const response = await get(`classes/Orders?where=%7B%20%22userId%22%3A%20%22${user.userId}%22%7D`);
             setOrders(response.results);
         }
         fetchData();
 
-    }, []);
+    }, [user.userId]);
 
     return (
         <>

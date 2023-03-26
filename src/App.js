@@ -15,11 +15,12 @@ import { Lorem } from './components/Lorem/Lorem';
 import { Orders } from './components/Orders/Orders';
 import { Register } from './components/Register/Register';
 import { Success } from './components/Success/Success';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
 
     const [basket, setBasket] = useState([]);
-    const [user, setUser] = useState(localStorage.userId !== undefined ? true : false);
+    const [user, setUser] = useLocalStorage('userPS');
 
     return (
         <>
@@ -29,15 +30,15 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/catalog/:params" element={<Catalog />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/checkout" element={<Checkout basket={basket} setBasket={setBasket} />} />
+                    <Route path="/checkout" element={<Checkout user={user} basket={basket} setBasket={setBasket} />} />
                     <Route path="/contacts" element={<Contact />} />
                     <Route path="/orders/change-size/:orderId/:itemId" element={<ChangeSize />} />
-                    <Route path="/catalog/:params/details/:itemId" element={<Details basket={basket} setBasket={setBasket}/>} />
+                    <Route path="/catalog/:params/details/:itemId" element={<Details user={user} basket={basket} setBasket={setBasket}/>} />
                     <Route path="/faqs" element={<Faqs />} />
                     <Route path="/login" element={<Login setUser={setUser} setBasket={setBasket}/>} />
                     <Route path="/register" element={<Register setUser={setUser}/>} />
                     <Route path="/lorem" element={<Lorem />} />
-                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/orders" element={<Orders user={user}/>} />
                     <Route path="/successful-order" element={<Success />} />
                 </Routes>
             </main>

@@ -4,34 +4,38 @@ import { Modal } from '../Modal/Modal';
 import styles from './Details.module.css';
 import { put, get } from '../../services/api';
 import { MoreDetails } from './MoreDetails/MoreDetails';
+import { Rating } from './Rating/Rating';
 
 export function Details(
     {
         setBasket,
-        basket
+        basket,
+        user
     }
 ) {
 
     const [modal, setModal] = useState(false);
     const [details, setDetails] = useState(false);
     const [sizeChart, setSizeChart] = useState(false);
+    const [review, setReview] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState("");
+    const [modalMessage, setModalMessage] = useState("");
     const [currentItem, setCurrentItem] = useState({ size: [] });
     const { itemId } = useParams();
     const navigate = useNavigate();
 
     const onAddToCard = async () => {
 
-        if (localStorage.userId === undefined) {
+        if (user === null) {
 
             navigate('/login');
             return;
         }
 
         if (selectedSize === "") {
-            alert("Please select a size");
-            return;
+            setModalMessage('Please select a size!');
+            return setModal(true);
         }
 
         let isOrdered = basket.find(x => x.currentItem.objectId === itemId);
@@ -66,13 +70,14 @@ export function Details(
 
         try {
 
-            await put(`classes/Baskets/${localStorage.basketId}`, { userId: localStorage.userId, items: obj });
+            await put(`classes/Baskets/${user.basketId}`, { userId: user.userId, items: obj });
 
         } catch (err) {
 
             return alert(err.message)
         }
 
+        setModalMessage('Successfully added to your basket');
         setModal(true);
     }
 
@@ -85,7 +90,12 @@ export function Details(
         setDetails(!details);
     }
 
+    function showReview() {
+        setReview(!review);
+    }
+
     function increaseQty() {
+
         setQuantity(quantity + 1);
     }
 
@@ -96,7 +106,6 @@ export function Details(
     const onSizeSelect = (e) => {
         setSelectedSize(e.target.value);
     }
-
 
     useEffect(() => {
 
@@ -113,7 +122,7 @@ export function Details(
     return (
 
         <div className={styles['product-template-container']}>
-            {modal && <Modal modal={modal} setModal={setModal} />}
+            {modal && <Modal modal={modal} setModal={setModal} message={modalMessage} />}
 
             <div className={styles['img-container']}>
                 <img className={styles['product-image']} src={currentItem.imgUrl} alt="" />
@@ -149,12 +158,17 @@ export function Details(
                     </div>
                 </form>
                 <div className={styles['tab-container']}>
-                    <p className={styles['acor-ttl']} onClick={() => showMoreDetails()}>Product
-                        Details</p>
-                    {details && <MoreDetails prop={'details'}/>}
+                    <p className={styles['acor-ttl']} onClick={() => showMoreDetails()}>Product Details</p>
+                    {details && <MoreDetails prop={'details'} />}
                 </div>
-                <p className={styles['acor-ttl']} onClick={() => showSizeChart()}>Size Chart</p>
-                {sizeChart && <MoreDetails prop={'sizeChart'}/>}
+                <div className={styles['tab-container']}>
+                    <p className={styles['acor-ttl']} onClick={() => showSizeChart()}>Size Chart</p>
+                    {sizeChart && <MoreDetails prop={'sizeChart'} />}
+                </div>
+                <div className={styles['tab-container']}>
+                    <p className={styles['acor-ttl']} onClick={() => showReview()}>Reviews</p>
+                    {review && <Rating user={user} objectId={currentItem.objectId} />}
+                </div>
             </div>
         </div>
     );

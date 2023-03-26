@@ -17,11 +17,12 @@ export function Login({ setUser, setBasket }) {
         const data = await get(`login?username=${values.username}&password=${values.password}`);
         const response = await get(`classes/Baskets?where=%7B%20%22userId%22%3A%20%22${data.objectId}%22%20%7D`);
         setBasket(Object.assign(...response.results).items)
-        localStorage.setItem("basketId", Object.assign(...response.results).objectId)
-        localStorage.setItem('userId', data.objectId);
-        localStorage.setItem('userLastName', data.lastName);
-        localStorage.setItem('userFirstName', data.firstName);
-        setUser(true);
+        setUser({
+            basketId: Object.assign(...response.results).objectId,
+            userId: data.objectId,
+            userLastName: data.lastName,
+            userFirstName: data.firstName
+        })
         navigate(-1);
     }
 

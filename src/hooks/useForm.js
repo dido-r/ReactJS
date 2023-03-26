@@ -5,7 +5,7 @@ export function useForm(initValues){
     const [values, setValues] = useState(initValues);
 
     const onChangeHandler = (e) => {
-
+        
         setValues(x => ({...x, [e.target.name]: e.target.value}))
     }
 

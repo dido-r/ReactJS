@@ -44,11 +44,7 @@ export function Header({ user, setUser }) {
 
     const onLogout = () => {
         onRedirect();
-        localStorage.removeItem('userId');
-        localStorage.removeItem('userLastName');
-        localStorage.removeItem('userFirstName');
-        localStorage.removeItem('basketId');
-        setUser(false);
+        setUser(null);
     }
 
     return (
