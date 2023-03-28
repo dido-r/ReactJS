@@ -2,15 +2,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import { get } from '../../services/api';
 import { useForm } from '../../hooks/useForm';
+import { useSessionContext } from '../../context/sessionContext';
 
-export function Login({ setUser, setBasket }) {
+export function Login() {
 
     const {values, onChangeHandler} = useForm({
         username: '',
         password: ''
     });
     const navigate = useNavigate();
-
+    const { setUser, setBasket } = useSessionContext();
     const onLoginSubmit = async (e) => {
 
         e.preventDefault();

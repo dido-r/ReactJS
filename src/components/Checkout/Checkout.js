@@ -2,14 +2,12 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Checkout.module.css';
 import { get, put, post } from '../../services/api';
+import { useSessionContext } from '../../context/sessionContext';
 
-export function Checkout({
-    basket,
-    setBasket,
-    user
-}) {
+export function Checkout() {
 
     const navigate = useNavigate();
+    const {basket, setBasket, user} = useSessionContext();
 
     useEffect(() => {
 
@@ -24,9 +22,9 @@ export function Checkout({
 
     const onItemRemove = async (id) => {
         
-        let obj = [...basket].filter(z => (z.currentItem.objectId + z.selectedSize) !== id);
+        let obj = [...basket].filter(z => (z.productId + z.selectedSize) !== id);
         await put(`classes/Baskets/${user.basketId}`, {userId: user.userId, items: obj});
-        setBasket(x => x.filter(z => (z.currentItem.objectId + z.selectedSize) !== id));
+        setBasket(x => x.filter(z => (z.productId + z.selectedSize) !== id));
     }
 
     async function fetchData(x) {
@@ -44,6 +42,16 @@ export function Checkout({
 
         basket.map(x => fetchData(x));
         setBasket([]);
+
+        try {
+
+            put(`classes/Baskets/${user.basketId}`, { items: [] });
+            
+        } catch (err) {
+
+            return alert(err.message)
+        }
+
         navigate('/successful-order');
     }
 
@@ -63,13 +71,13 @@ export function Checkout({
                     </thead>
                     <tbody>
                         {basket.map(x =>
-                            <tr key={x.currentItem.objectId + x.selectedSize}>
-                                <td>{x.currentItem.name}</td>
-                                <td>${x.currentItem.price}</td>
+                            <tr key={x.productId + x.selectedSize}>
+                                <td>{x.productName}</td>
+                                <td>${x.productPrice}</td>
                                 <td>{x.selectedSize}</td>
                                 <td>{x.quantity}</td>
-                                <td>${x.currentItem.price * x.quantity}</td>
-                                <td><button className={styles['btn-rem']} onClick={() => onItemRemove(x.currentItem.objectId + x.selectedSize)}>x</button></td>
+                                <td>${x.productPrice * x.quantity}</td>
+                                <td><button className={styles['btn-rem']} onClick={() => onItemRemove(x.productId + x.selectedSize)}>x</button></td>
                             </tr>
 
                         )}
@@ -78,7 +86,7 @@ export function Checkout({
                     <tfoot>
                         <tr>
                             <td>Total</td>
-                            <td>${basket.reduce((init, x) => init + x.currentItem.price * x.quantity, 0)}</td>
+                            <td>${basket.reduce((init, x) => init + x.productPrice * x.quantity, 0)}</td>
                         </tr>
                     </tfoot>
                 </table>

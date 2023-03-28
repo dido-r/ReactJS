@@ -3,14 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faUser, faMagnifyingGlass, faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSessionContext } from '../../context/sessionContext';
 
-export function Header({ user, setUser }) {
+export function Header() {
 
     const [navView, setNavView] = useState("0");
     const [userNav, setUserNav] = useState("");
     const [dropMenu, setDropMenu] = useState(false);
     const [searchBar, setSearchBar] = useState(false);
     const navigate = useNavigate();
+    const {user, setUser} = useSessionContext();
 
     function onSearchClick() {
         setSearchBar(!searchBar);

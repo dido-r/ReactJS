@@ -1,9 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useSessionContext } from '../../context/sessionContext';
 import { useForm } from '../../hooks/useForm';
 import { post } from '../../services/api';
 import styles from './Register.module.css';
 
-export function Register({ setUser }) {
+export function Register() {
 
     const { values, onChangeHandler } = useForm({
         firstName: '',
@@ -14,6 +15,7 @@ export function Register({ setUser }) {
         repass: ''
     });
     const navigate = useNavigate();
+    const {setUser} = useSessionContext();
 
     const onRegisterSubmit = async (e) => {
 

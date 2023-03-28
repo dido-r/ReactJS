@@ -4,10 +4,12 @@ import styles from './Orders.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
 import { del, get } from '../../services/api';
+import { useSessionContext } from '../../context/sessionContext';
 
-export function Orders({user}) {
+export function Orders() {
 
     const [orders, setOrders] = useState([]);
+    const {user} = useSessionContext();
 
     const onOrderReturn = async (orderId) => {
 
@@ -49,11 +51,11 @@ export function Orders({user}) {
 
                         {orders.map(x =>
                             <tr key={x.objectId}>
-                                <td><img src={x.currentItem.imgUrl} alt="img" /></td>
-                                <td><h4>{x.currentItem.name}</h4></td>
-                                <td>${x.currentItem.price}</td>
+                                <td><img src={x.productImg} alt="img" /></td>
+                                <td><h4>{x.productName}</h4></td>
+                                <td>${x.productPrice}</td>
                                 <td>{x.selectedSize}</td>
-                                <td><Link to={"/orders/change-size/" + x.objectId + "/" + x.currentItem.objectId} className={styles["return-order-btn"]}>Change</Link></td>
+                                <td><Link to={"/orders/change-size/" + x.objectId + "/" + x.productId} className={styles["return-order-btn"]}>Change</Link></td>
                                 <td><button className={styles["remove-order-btn"]} onClick={() => onOrderReturn(x.objectId)}>Return</button></td>
                             </tr>)}
 

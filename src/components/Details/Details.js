@@ -5,14 +5,9 @@ import styles from './Details.module.css';
 import { put, get } from '../../services/api';
 import { MoreDetails } from './MoreDetails/MoreDetails';
 import { Rating } from './Rating/Rating';
+import { useSessionContext } from '../../context/sessionContext';
 
-export function Details(
-    {
-        setBasket,
-        basket,
-        user
-    }
-) {
+export function Details() {
 
     const [modal, setModal] = useState(false);
     const [details, setDetails] = useState(false);
@@ -24,8 +19,9 @@ export function Details(
     const [currentItem, setCurrentItem] = useState({ size: [] });
     const { itemId } = useParams();
     const navigate = useNavigate();
+    const { setBasket, basket, user } = useSessionContext();
 
-    const onAddToCard = async () => {
+    const onAddToCard = () => {
 
         if (user === null) {
 
@@ -38,40 +34,40 @@ export function Details(
             return setModal(true);
         }
 
-        let isOrdered = basket.find(x => x.currentItem.objectId === itemId);
-        let obj = [...basket];
+        let isOrdered = basket.find(x => x.productId === itemId && x.selectedSize === selectedSize);
+        let obj = Array.from(basket);
+       
 
-        if (isOrdered !== undefined && isOrdered.selectedSize === selectedSize) {
-
-            obj.map(z => z.currentItem.objectId === itemId ? {
-                ...z,
-                quantity: z.quantity + quantity
-            } : z);
-
-            setBasket(x => x.map(z => z.currentItem.objectId === itemId ? {
-                ...z,
-                quantity: z.quantity + quantity
-            } : z))
+        if (isOrdered !== undefined) {
+            
+            isOrdered.quantity += quantity;
 
         } else {
 
-            obj.push({
-                currentItem,
-                quantity,
-                selectedSize
-            });
-
             setBasket(x => [...x, {
-                currentItem,
+                productId: currentItem.objectId,
+                productName: currentItem.name,
+                productPrice: currentItem.price,
+                productImg: currentItem.imgUrl,
                 quantity,
                 selectedSize
             }]);
+
+            obj.push({
+                productId: currentItem.objectId,
+                productName: currentItem.name,
+                productPrice: currentItem.price,
+                productImg: currentItem.imgUrl,
+                quantity,
+                selectedSize
+            })
+
         }
 
         try {
 
-            await put(`classes/Baskets/${user.basketId}`, { userId: user.userId, items: obj });
-
+            put(`classes/Baskets/${user.basketId}`, { items: obj });
+            
         } catch (err) {
 
             return alert(err.message)
