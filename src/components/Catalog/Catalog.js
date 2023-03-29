@@ -5,6 +5,10 @@ import { useParams } from 'react-router-dom';
 import { CatalogSidebar } from './CatalogSidebar/CatalogSidebar';
 import ReactPaginate from 'react-paginate';
 import { get } from '../../services/api';
+import LoadingSpinner from '../Spinner/LoadingSpinner';
+import { Banner } from './Banner/Banner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export function Catalog() {
 
@@ -18,16 +22,31 @@ export function Catalog() {
     const [sortCreteria, setSortCriteria] = useState("");
     const [offset, setOffset] = useState(0);
     const [pageCount, setPageCount] = useState(0);
-    let bannerSrc = "";
+    const [isLoading, setIsloading] = useState(true);
 
-    if (params === 'men') {
 
-        bannerSrc = "https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/BANNER-MENS-CLOTHING_outope.jpg";
+    const [showButton, setShowButton] = useState(false);
 
-    } else if (params === 'women') {
+    useEffect(() => {
 
-        bannerSrc = "https://res.cloudinary.com/diby8tbnn/image/upload/v1677854615/banner-home-alexinternational-WOMENS-CLOTHING_gmxjbn.jpg"
-    }
+        window.addEventListener("scroll", () => {
+
+            if (window.scrollY > 300 ) {
+
+                setShowButton(true);
+
+            } else {
+
+                setShowButton(false);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+
+        setOffset(0);
+
+    }, [params]);
 
     useEffect(() => {
 
@@ -35,6 +54,7 @@ export function Catalog() {
 
             const response = await get('classes/Products');
             setProducts(response.results);
+            setIsloading(false)
         }
         fetchData();
 
@@ -44,6 +64,7 @@ export function Catalog() {
     const onPageSelect = (event) => {
 
         setOffset(event.selected * itemsPerPage % products.length);
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 
     const onItemsPerPageChange = (e) => {
@@ -60,12 +81,7 @@ export function Catalog() {
         <>
             {(params === 'men' || params === 'women') &&
 
-                <div className={styles['collection-header']}>
-                    <div className={styles['collection-hero']}>
-                        <div className={styles['collection-hero-img-container']}><img className={styles['collection-hero-image']}
-                            src={bannerSrc} alt="" /></div>
-                    </div>
-                </div>}
+                <Banner params={params} />}
 
             <section className={styles['sort-section']}>
                 <div className={styles['sort-type']}>
@@ -94,9 +110,12 @@ export function Catalog() {
                 <CatalogSidebar valuePrice={valuePrice} setValuePrice={setValuePrice} valueSize={valueSize} setValueSize={setValueSize} categoryType={categoryType} setCategoryType={setCategoryType} gender={gender} setGender={setGender} />
 
                 <div className={styles['catalog-flex']}>
-                    <Product sortCreteria={sortCreteria} setPageCount={setPageCount} offset={offset} itemsPerPage={itemsPerPage} products={products} gender={gender} params={params} valueSize={valueSize} valuePrice={valuePrice} categoryType={categoryType} />
+                    {isLoading ? <LoadingSpinner /> :
+                        <Product sortCreteria={sortCreteria} setPageCount={setPageCount} offset={offset} itemsPerPage={itemsPerPage} products={products} gender={gender} params={params} valueSize={valueSize} valuePrice={valuePrice} categoryType={categoryType} />}
                 </div>
             </div>
+
+            <FontAwesomeIcon className={`${styles['arrow-top']} ${!showButton ? styles['arrow-disabled'] : styles['']}`} icon={faArrowUp} onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }) }} />
 
             <div className={styles['pagination']}>
                 <ReactPaginate
@@ -106,6 +125,7 @@ export function Catalog() {
                     pageRangeDisplayed={5}
                     pageCount={pageCount}
                     previousLabel="<"
+                    renderOnZeroPageCount={null}
                 />
             </div>
         </>

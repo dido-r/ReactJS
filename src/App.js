@@ -29,6 +29,7 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contacts" element={<Contact />} />
                     <Route path="/catalog/:params/details/:itemId" element={<Details />} />
+                    <Route path="/checkout/details/:itemId" element={<Details />} />
                     <Route path="/faqs" element={<Faqs />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />

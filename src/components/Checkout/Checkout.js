@@ -1,13 +1,19 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './Checkout.module.css';
 import { get, put, post } from '../../services/api';
 import { useSessionContext } from '../../context/sessionContext';
+import { Modal } from '../Modal/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 export function Checkout() {
 
     const navigate = useNavigate();
     const {basket, setBasket, user} = useSessionContext();
+    const [isLoading, setIsloading] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
 
     useEffect(() => {
 
@@ -40,6 +46,10 @@ export function Checkout() {
             return;
         }
 
+        setIsloading(true);
+        setModalMessage('Loading...');
+        setModal(true);
+
         basket.map(x => fetchData(x));
         setBasket([]);
 
@@ -52,11 +62,19 @@ export function Checkout() {
             return alert(err.message)
         }
 
+        setIsloading(false);
+        setModal(false);
         navigate('/successful-order');
     }
 
+    const onQuantityChange = (e, id) => {
+
+        setBasket(x => x.map(z => (z.productId + z.selectedSize) === id ? ({...z, quantity: e.target.value}) : z));
+    }
+
     return (
-        <>
+        <>  
+        {modal && <Modal modal={modal} setModal={setModal} message={modalMessage} isLoading={isLoading}/>}
             <h2 className={styles['check-head']}>Checkout</h2>
             <div className={styles['container']}>
                 <table className={styles['check-table']}>
@@ -72,12 +90,12 @@ export function Checkout() {
                     <tbody>
                         {basket.map(x =>
                             <tr key={x.productId + x.selectedSize}>
-                                <td>{x.productName}</td>
+                                <td><Link to={"details/" + x.productId}>{x.productName}</Link></td>
                                 <td>${x.productPrice}</td>
                                 <td>{x.selectedSize}</td>
-                                <td>{x.quantity}</td>
+                                <td><input type="number" min={1} defaultValue={x.quantity} onChange={(e) => onQuantityChange(e, x.productId + x.selectedSize)}/></td>
                                 <td>${x.productPrice * x.quantity}</td>
-                                <td><button className={styles['btn-rem']} onClick={() => onItemRemove(x.productId + x.selectedSize)}>x</button></td>
+                                <td><button className={styles['btn-rem']} onClick={() => onItemRemove(x.productId + x.selectedSize)}><FontAwesomeIcon className={styles['trash']} icon={faTrashCan}/></button></td>
                             </tr>
 
                         )}

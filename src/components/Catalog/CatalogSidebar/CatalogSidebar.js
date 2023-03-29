@@ -1,7 +1,5 @@
 import styles from './CatalogSidebar.module.css';
 import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 export function CatalogSidebar({
     valuePrice,
@@ -59,10 +57,10 @@ export function CatalogSidebar({
 
         <div className={styles['catalog-sidebar']}>
             <div>
-                {categoryType !== "all" && <span className={styles['inline-remove']}><FontAwesomeIcon className={styles['inline-icon']} icon={faXmark} /><button className={styles['clear-filter-btn']} onClick={onClearCategory}>{categoryType}</button></span>}
-                {valueSize !== "all" && <span className={styles['inline-remove']}><FontAwesomeIcon className={styles['inline-icon']} icon={faXmark} /><button className={styles['clear-filter-btn']} onClick={onClearSize}>{valueSize}</button></span>}
-                {valuePrice !== "all" && <span className={styles['inline-remove']}><FontAwesomeIcon className={styles['inline-icon']} icon={faXmark} /><button className={styles['clear-filter-btn']} onClick={onClearPrice}>{valuePrice}</button></span>}
-                {gender !== null && <span className={styles['inline-remove']}><FontAwesomeIcon className={styles['inline-icon']} icon={faXmark} /><button className={styles['clear-filter-btn']} onClick={onClearGender}>{gender}</button></span>}
+                {categoryType !== "all" && <span className={styles['inline-remove']}><button className={styles['clear-filter-btn']} onClick={onClearCategory}>x - {categoryType}</button></span>}
+                {valueSize !== "all" && <span className={styles['inline-remove']}><button className={styles['clear-filter-btn']} onClick={onClearSize}>x - {valueSize}</button></span>}
+                {valuePrice !== "all" && <span className={styles['inline-remove']}><button className={styles['clear-filter-btn']} onClick={onClearPrice}>x - {valuePrice}</button></span>}
+                {gender !== null && <span className={styles['inline-remove']}><button className={styles['clear-filter-btn']} onClick={onClearGender}>x - {gender}</button></span>}
                 {(valueSize !== "all" || valuePrice !== "all" || categoryType !== "all" || gender !== null) && <button className={styles['clear-filter-btn']} onClick={onClearAll}>Clear All</button>}
             </div>
 

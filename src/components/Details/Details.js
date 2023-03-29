@@ -20,6 +20,7 @@ export function Details() {
     const { itemId } = useParams();
     const navigate = useNavigate();
     const { setBasket, basket, user } = useSessionContext();
+    const [isLoading, setIsloading] = useState(false);
 
     const onAddToCard = () => {
 
@@ -33,6 +34,10 @@ export function Details() {
             setModalMessage('Please select a size!');
             return setModal(true);
         }
+
+        setIsloading(true);
+        setModalMessage('Successfully added to your basket');
+        setModal(true);
 
         let isOrdered = basket.find(x => x.productId === itemId && x.selectedSize === selectedSize);
         let obj = Array.from(basket);
@@ -73,8 +78,7 @@ export function Details() {
             return alert(err.message)
         }
 
-        setModalMessage('Successfully added to your basket');
-        setModal(true);
+       setIsloading(false);
     }
 
     function showSizeChart() {
@@ -118,7 +122,7 @@ export function Details() {
     return (
 
         <div className={styles['product-template-container']}>
-            {modal && <Modal modal={modal} setModal={setModal} message={modalMessage} />}
+            {modal && <Modal modal={modal} setModal={setModal} message={modalMessage} isLoading={isLoading}/>}
 
             <div className={styles['img-container']}>
                 <img className={styles['product-image']} src={currentItem.imgUrl} alt="" />

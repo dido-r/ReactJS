@@ -1,8 +1,10 @@
+import LoadingSpinner from '../Spinner/LoadingSpinner';
 import styles from './Modal.module.css';
 
 export function Modal({
     setModal,
-    message
+    message,
+    isLoading
 }) {
 
     const onCloseModal = () => {
@@ -11,8 +13,8 @@ export function Modal({
     return (
         <div className={styles['modal-background']}>
             <div className={styles['modal-content']}>
-                <span className={styles['close-modal']} onClick={onCloseModal}>&times;</span>
-                <p>{message}</p>
+                {!isLoading && <span className={styles['close-modal']} onClick={onCloseModal}>&times;</span>}
+                {isLoading ? <LoadingSpinner /> : <p>{message}</p>}
             </div>
         </div>
 

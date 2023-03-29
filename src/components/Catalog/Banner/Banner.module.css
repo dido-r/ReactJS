@@ -1,0 +1,17 @@
+.collection-header {
+    margin-bottom: 20px;
+}
+
+.collection-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.collection-hero-img-container {
+    height: 250px;
+    opacity: 1;
+}
+
+.collection-hero-image {
+    width: 100%;
+}
