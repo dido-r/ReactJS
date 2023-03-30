@@ -10,7 +10,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 export function Checkout() {
 
     const navigate = useNavigate();
-    const {basket, setBasket, user} = useSessionContext();
+    const { basket, setBasket, user } = useSessionContext();
     const [isLoading, setIsloading] = useState(false);
     const [modal, setModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
@@ -19,30 +19,58 @@ export function Checkout() {
 
         async function fetchData() {
 
-            const response = await get(`classes/Baskets/${user.basketId}`);
-            setBasket(response.items);
+            try {
+
+                const response = await get(`classes/Baskets/${user.basketId}`);
+                setBasket(response.items);
+
+            } catch {
+
+                setModalMessage('Could not load your basket. Please try again later or contact support.')
+                setModal(true);
+                return
+            }
         }
         fetchData();
 
-    }, [ setBasket, user.basketId]);
+    }, [setBasket, user.basketId]);
 
     const onItemRemove = async (id) => {
-        
-        let obj = [...basket].filter(z => (z.productId + z.selectedSize) !== id);
-        await put(`classes/Baskets/${user.basketId}`, {userId: user.userId, items: obj});
-        setBasket(x => x.filter(z => (z.productId + z.selectedSize) !== id));
+
+        try {
+
+            let obj = [...basket].filter(z => (z.productId + z.selectedSize) !== id);
+            await put(`classes/Baskets/${user.basketId}`, { userId: user.userId, items: obj });
+            setBasket(x => x.filter(z => (z.productId + z.selectedSize) !== id));
+
+        } catch {
+
+            setModalMessage('Could not remove this item. Please try again later or contact support.')
+            setModal(true);
+            return
+        }
     }
 
     async function fetchData(x) {
 
-        await post(`classes/Orders`, { ...x, userId: user.userId });
+        try {
+
+            await post(`classes/Orders`, { ...x, userId: user.userId });
+
+        } catch {
+
+            setModalMessage('Bad order request. Please try again later or contact support.')
+            setModal(true);
+            return
+        }
     }
 
     const onOrderSubmit = () => {
 
         if (basket.length === 0) {
 
-            alert("Your basket is empty");
+            setModalMessage('Your basket is empty.')
+            setModal(true);
             return;
         }
 
@@ -56,10 +84,12 @@ export function Checkout() {
         try {
 
             put(`classes/Baskets/${user.basketId}`, { items: [] });
-            
-        } catch (err) {
 
-            return alert(err.message)
+        } catch {
+
+            setModalMessage('Could not empty your basket. Please contact support.')
+            setModal(true);
+            return;
         }
 
         setIsloading(false);
@@ -69,12 +99,12 @@ export function Checkout() {
 
     const onQuantityChange = (e, id) => {
 
-        setBasket(x => x.map(z => (z.productId + z.selectedSize) === id ? ({...z, quantity: e.target.value}) : z));
+        setBasket(x => x.map(z => (z.productId + z.selectedSize) === id ? ({ ...z, quantity: e.target.value }) : z));
     }
 
     return (
-        <>  
-        {modal && <Modal modal={modal} setModal={setModal} message={modalMessage} isLoading={isLoading}/>}
+        <>
+            {modal && <Modal modal={modal} setModal={setModal} message={modalMessage} isLoading={isLoading} />}
             <h2 className={styles['check-head']}>Checkout</h2>
             <div className={styles['container']}>
                 <table className={styles['check-table']}>
@@ -93,9 +123,9 @@ export function Checkout() {
                                 <td><Link to={"details/" + x.productId}>{x.productName}</Link></td>
                                 <td>${x.productPrice}</td>
                                 <td>{x.selectedSize}</td>
-                                <td><input type="number" min={1} defaultValue={x.quantity} onChange={(e) => onQuantityChange(e, x.productId + x.selectedSize)}/></td>
+                                <td><input type="number" min={1} defaultValue={x.quantity} onChange={(e) => onQuantityChange(e, x.productId + x.selectedSize)} /></td>
                                 <td>${x.productPrice * x.quantity}</td>
-                                <td><button className={styles['btn-rem']} onClick={() => onItemRemove(x.productId + x.selectedSize)}><FontAwesomeIcon className={styles['trash']} icon={faTrashCan}/></button></td>
+                                <td><button className={styles['btn-rem']} onClick={() => onItemRemove(x.productId + x.selectedSize)}><FontAwesomeIcon className={styles['trash']} icon={faTrashCan} /></button></td>
                             </tr>
 
                         )}

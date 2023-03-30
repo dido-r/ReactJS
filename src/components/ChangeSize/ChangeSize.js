@@ -1,6 +1,8 @@
 import styles from './ChangeSize.module.css';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { put, get } from '../../services/api';
+import { Modal } from '../Modal/Modal';
 
 export function ChangeSize() {
 
@@ -10,6 +12,8 @@ export function ChangeSize() {
     const [currentItem, setCurrentItem] = useState({ size: [] });
     const [currentorder, setCurrentOrder] = useState({ size: [] });
     const { orderId, itemId } = useParams();
+    const [modal, setModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState(false);
     const navigate = useNavigate();
 
     function showSizeChart() {
@@ -24,55 +28,63 @@ export function ChangeSize() {
         setSelectedSize(e.target.value)
     }
 
-    const onSizechange = () => {
+    const onSizechange = async () => {
 
         getCurrentOrder();
 
-        fetch(`https://parseapi.back4app.com/classes/Orders/${orderId}`,
-            {
-                method: "PUT",
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ ...currentorder, selectedSize: selectedSize })
-            });
+        try {
+
+            await put(`/classes/Orders/${orderId}`, { ...currentorder, selectedSize: selectedSize });
+
+        } catch {
+
+            setModalMessage('Bad request. Please try again later or contact support.')
+            setModal(true);
+            return;
+        }
 
         navigate('/successful-order');
     }
 
-    const getCurrentOrder = () => {
+    const getCurrentOrder = async () => {
 
-        fetch(`https://parseapi.back4app.com/classes/Orders?where=%7B%20%22objectId%22%3A%20%22${orderId}%22%7D`,
-            {
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
-                }
-            })
-            .then(x => x.json())
-            .then(x => setCurrentOrder(...x.results))
+        try {
+
+            let response = await get(`/classes/Orders?where=%7B%20%22objectId%22%3A%20%22${orderId}%22%7D`);
+            setCurrentOrder(...response.results);
+
+        } catch{
+
+            setModalMessage('Could not load current order. Please try again later or contact support.')
+            setModal(true);
+            return;
+        }
     }
 
     useEffect(() => {
 
-        fetch(`https://parseapi.back4app.com/classes/Products?where=%7B%20%22objectId%22%3A%20%22${itemId}%22%7D`,
-            {
-                headers: {
-                    "X-Parse-Application-Id": "mWelAz1zpW0lQMPIwD8xQs7BUgy1YhWGy1Zt8wB1",
-                    "X-Parse-REST-API-Key": "iS3NuKzNfFCSnW8T1htlC4wvsgFm0vYgBbnrOTdU"
-                }
-            })
-            .then(x => x.json())
-            .then(x => setCurrentItem(...x.results))
+        async function fetchData() {
+
+            try {
+
+                const response = await get(`/classes/Products?where=%7B%20%22objectId%22%3A%20%22${itemId}%22%7D`);
+                setCurrentItem(...response.results)
+
+            } catch {
+
+                setModalMessage('Could not load current order. Please try again later or contact support.')
+                setModal(true);
+                return;
+            }
+        }
+        fetchData();
 
     }, [itemId]);
 
     return (
 
         <div className={styles['product-template-container']}>
-
+            {modal && <Modal setModal={setModal} message={modalMessage} />}
             <div className={styles['img-container']}>
                 <img className={styles['product-image']} src={currentItem.imgUrl} alt="" />
             </div>

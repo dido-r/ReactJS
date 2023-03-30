@@ -8,6 +8,7 @@ export function Slider({ gender }) {
     const [offset, setOffset] = useState(0);
     const [activeDot, setActiveDot] = useState(0);
     const [trendItems, setTrendItems] = useState([]);
+    const [isError, setIsError] = useState(false);
 
     const onChoose = (prop) => {
 
@@ -30,26 +31,36 @@ export function Slider({ gender }) {
     useEffect(() => {
         async function fetchData() {
 
-            const response = await get(`classes/Products?where=%7B%20%22gender%22%3A%20%22${gender}%22%7D`);
-            setTrendItems(response.results.slice(response.results.length - 9, response.results.length));
+            try {
+
+                const response = await get(`/classes/Products?where=%7B%20%22gender%22%3A%20%22${gender}%22%7D`);
+                setTrendItems(response.results.slice(response.results.length - 9, response.results.length));
+
+            } catch {
+
+                setIsError(true);
+                return;
+            }
         }
         fetchData();
 
     }, [gender]);
 
     return (
-        <div>
+        
+            <>
             <div className={styles['slideshow-container']}>
-
-               
                 <div className={`${styles['mySlides']} ${styles['fade']}}`}>
 
-                    {trendItems.slice(offset, offset + 3).map(x =>
+                    {isError ? 
+                    <p> Something went wrong</p>
+                    :
+                    (trendItems.slice(offset, offset + 3).map(x =>
                         <div key={x.objectId} className={styles['item-container']}>
                             <Link to={`/catalog/${gender}/details/${x.objectId}`}><img src={x.imgUrl} alt="" /></Link>
                             <p>{x.name}</p>
                         </div>
-                    )}
+                    ))}
                 </div>
 
                 <p className={styles['prev']} onClick={() => onChoose("prev")}>&#10094;</p>
@@ -57,12 +68,11 @@ export function Slider({ gender }) {
             </div>
             <br />
 
-
             <div className={styles['dot-container']}>
                 <span className={`${styles['dot']} ${activeDot === 0 && styles['active']}`} onClick={() => onChoose(0)}></span>
                 <span className={`${styles['dot']} ${activeDot === 3 && styles['active']}`} onClick={() => onChoose(3)}></span>
                 <span className={`${styles['dot']} ${activeDot === 6 && styles['active']}`} onClick={() => onChoose(6)}></span>
             </div>
-        </div>
+            </>
     );
 }

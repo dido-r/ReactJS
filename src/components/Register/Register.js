@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSessionContext } from '../../context/sessionContext';
 import { useForm } from '../../hooks/useForm';
 import { post } from '../../services/api';
+import { Modal } from '../Modal/Modal';
 import styles from './Register.module.css';
 
 export function Register() {
@@ -15,7 +17,9 @@ export function Register() {
         repass: ''
     });
     const navigate = useNavigate();
-    const {setUser} = useSessionContext();
+    const { setUser } = useSessionContext();
+    const [modal, setModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const onRegisterSubmit = async (e) => {
 
@@ -23,7 +27,8 @@ export function Register() {
 
         if (values.password !== values.repass) {
 
-            alert("Passwords do not match!");
+            setModalMessage("Passwords do not match!");
+            setModal(true);
             return;
         }
 
@@ -36,19 +41,29 @@ export function Register() {
             password: values.password
         }
 
-        const data = await post('users', obj);
-        const response = await post('classes/Baskets', { items: [], userId: data.objectId });
-        setUser({
-            basketId: response.objectId,
-            userId: data.objectId,
-            userLastName: values.firstName,
-            userFirstName: values.lastName
-        })
-        navigate('/');
+        try {
+
+            const data = await post('users', obj);
+            const response = await post('/classes/Baskets', { items: [], userId: data.objectId });
+            setUser({
+                basketId: response.objectId,
+                userId: data.objectId,
+                userLastName: values.firstName,
+                userFirstName: values.lastName
+            })
+            navigate('/');
+
+        } catch {
+
+            setModalMessage("Bad register request. Please try again later or contact support.");
+            setModal(true);
+            return;
+        }
     }
 
     return (
         <div className={styles['login']} onSubmit={(e) => onRegisterSubmit(e)}>
+            {modal && <Modal setModal={setModal} message={modalMessage} />}
             <h2>Register</h2>
             <form>
                 <div><input type="text" placeholder="firstName" name="firstName" required="required" value={values.firstName} onChange={(e) => onChangeHandler(e)} /></div>

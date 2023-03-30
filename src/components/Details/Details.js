@@ -122,7 +122,7 @@ export function Details() {
     return (
 
         <div className={styles['product-template-container']}>
-            {modal && <Modal modal={modal} setModal={setModal} message={modalMessage} isLoading={isLoading}/>}
+            {modal && <Modal setModal={setModal} message={modalMessage} isLoading={isLoading}/>}
 
             <div className={styles['img-container']}>
                 <img className={styles['product-image']} src={currentItem.imgUrl} alt="" />

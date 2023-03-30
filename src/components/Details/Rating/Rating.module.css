@@ -45,3 +45,11 @@
     width: 30px;
     height: auto;
 }
+
+.error{
+    font-family: Poppins, Helvetica, Tahoma, Arial, sans-serif;
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 1;
+    transition: 0.5s;
+}

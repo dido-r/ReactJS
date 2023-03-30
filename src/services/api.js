@@ -38,8 +38,7 @@ async function request(method, url, obj) {
 
     } catch (err) {
 
-        alert(err.message);
-        throw err;
+        throw new Error();
     }
 }
 

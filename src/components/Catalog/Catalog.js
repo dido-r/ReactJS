@@ -9,6 +9,7 @@ import LoadingSpinner from '../Spinner/LoadingSpinner';
 import { Banner } from './Banner/Banner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { Modal } from '../Modal/Modal';
 
 export function Catalog() {
 
@@ -23,6 +24,7 @@ export function Catalog() {
     const [offset, setOffset] = useState(0);
     const [pageCount, setPageCount] = useState(0);
     const [isLoading, setIsloading] = useState(true);
+    const [modal, setModal] = useState(false);
 
 
     const [showButton, setShowButton] = useState(false);
@@ -31,7 +33,7 @@ export function Catalog() {
 
         window.addEventListener("scroll", () => {
 
-            if (window.scrollY > 300 ) {
+            if (window.scrollY > 300) {
 
                 setShowButton(true);
 
@@ -52,13 +54,22 @@ export function Catalog() {
 
         async function fetchData() {
 
-            const response = await get('classes/Products');
-            setProducts(response.results);
-            setIsloading(false)
+            try {
+
+                const response = await get('classes/Products');
+                setProducts(response.results);
+                setIsloading(false)
+
+            } catch {
+
+                setModal(true);
+                return;
+            }
         }
         fetchData();
 
         setPageCount(Math.ceil(products.length / itemsPerPage));
+
     }, [products.length, itemsPerPage]);
 
     const onPageSelect = (event) => {
@@ -79,6 +90,7 @@ export function Catalog() {
 
     return (
         <>
+            {modal && <Modal setModal={setModal} message={'Could not load the catalog. Please try again later or contact support.'} />}
             {(params === 'men' || params === 'women') &&
 
                 <Banner params={params} />}
