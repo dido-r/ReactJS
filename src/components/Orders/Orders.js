@@ -3,21 +3,24 @@ import { Link } from 'react-router-dom';
 import styles from './Orders.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons'
-import { del, get } from '../../services/api';
+import { get } from '../../services/api';
 import { useSessionContext } from '../../context/sessionContext';
 import LoadingSpinner from '../Spinner/LoadingSpinner';
+import { ConfirmDelete } from './ConfirmDelete/ConfirmDelete';
 
 export function Orders() {
 
     const [orders, setOrders] = useState([]);
-    const { user } = useSessionContext();
+    const [orderId, setOrderId] = useState('');
     const [isLoading, setIsloading] = useState(true);
     const [isError, setIsError] = useState(false);
+    const [modal, setModal] = useState(false);
+    const { user } = useSessionContext();
 
-    const onOrderReturn = async (orderId) => {
+    const onOrderReturn = async (id) => {
 
-        await del(`classes/Orders/${orderId}`)
-        setOrders(orders.filter(x => x.objectId !== orderId));
+        setOrderId(id);
+        setModal(true);
     }
 
     useEffect(() => {
@@ -45,7 +48,7 @@ export function Orders() {
             <div className={styles["orders-title"]}>
                 <h2 className={styles["page-width"]}>My orders</h2>
             </div>
-
+            {modal && <ConfirmDelete setModal={setModal} orders={orders} setOrders={setOrders} orderId={orderId}/>}
             {isError
                 ?
                 <div className={styles["error"]}>Could not load your orders. Please try again later or contact support.</div>

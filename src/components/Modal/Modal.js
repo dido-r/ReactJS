@@ -8,8 +8,9 @@ export function Modal({
 }) {
 
     const onCloseModal = () => {
-        setModal(false)
+        setModal(false);
     }
+
     return (
         <div className={styles['modal-background']}>
             <div className={styles['modal-content']}>

@@ -7,7 +7,7 @@ import { Contact } from './components/Contact/Contact';
 import { Details } from './components/Details/Details';
 import { Faqs } from './components/Faqs/Faqs';
 import { Footer } from './components/Footer/Footer';
-import { RouteGuard } from './components/Guard/RouteGuard';
+import { NoUserGuard } from './components/Guard/NoUserGuard';
 import { Header } from './components/Header/Header';
 import { Home } from './components/Home/Home';
 import { Login } from './components/Login/Login';
@@ -16,6 +16,7 @@ import { Orders } from './components/Orders/Orders';
 import { Register } from './components/Register/Register';
 import { Success } from './components/Success/Success';
 import { SessionProvider } from './context/sessionContext';
+import { UserGuard } from './components/Guard/UserGuard';
 
 function App() {
 
@@ -31,11 +32,13 @@ function App() {
                     <Route path="/catalog/:params/details/:itemId" element={<Details />} />
                     <Route path="/checkout/details/:itemId" element={<Details />} />
                     <Route path="/faqs" element={<Faqs />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
                     <Route path="/lorem" element={<Lorem />} />
                     <Route path="/successful-order" element={<Success />} />
-                    <Route element={<RouteGuard />}>
+                    <Route element={<UserGuard />}>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                    </Route>
+                    <Route element={<NoUserGuard />}>
                         <Route path="/orders" element={<Orders />} />
                         <Route path="/orders/change-size/:orderId/:itemId" element={<ChangeSize />} />
                         <Route path="/checkout" element={<Checkout />} />

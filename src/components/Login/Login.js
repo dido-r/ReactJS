@@ -6,7 +6,9 @@ import { useSessionContext } from '../../context/sessionContext';
 import { useState } from 'react';
 import { Modal } from '../Modal/Modal';
 
-export function Login() {
+export function Login({
+    location
+}) {
 
     const { values, onChangeHandler } = useForm({
         username: '',
@@ -30,7 +32,7 @@ export function Login() {
                 userLastName: data.lastName,
                 userFirstName: data.firstName
             })
-            navigate(-1);
+            location ? navigate(location.pathname) : navigate(-1);
 
         } catch {
 

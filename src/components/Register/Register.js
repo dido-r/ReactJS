@@ -8,6 +8,8 @@ import styles from './Register.module.css';
 
 export function Register() {
 
+    const [modal, setModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
     const { values, onChangeHandler } = useForm({
         firstName: '',
         lastName: '',
@@ -16,10 +18,8 @@ export function Register() {
         password: '',
         repass: ''
     });
-    const navigate = useNavigate();
     const { setUser } = useSessionContext();
-    const [modal, setModal] = useState(false);
-    const [modalMessage, setModalMessage] = useState('');
+    const navigate = useNavigate();
 
     const onRegisterSubmit = async (e) => {
 

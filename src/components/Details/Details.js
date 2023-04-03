@@ -17,10 +17,10 @@ export function Details() {
     const [selectedSize, setSelectedSize] = useState("");
     const [modalMessage, setModalMessage] = useState("");
     const [currentItem, setCurrentItem] = useState({ size: [] });
-    const { itemId } = useParams();
-    const navigate = useNavigate();
-    const { setBasket, basket, user } = useSessionContext();
     const [isLoading, setIsloading] = useState(false);
+    const { itemId } = useParams();
+    const { setBasket, basket, user } = useSessionContext();
+    const navigate = useNavigate();
 
     const onAddToCard = () => {
 
@@ -48,16 +48,7 @@ export function Details() {
             isOrdered.quantity += quantity;
 
         } else {
-
-            setBasket(x => [...x, {
-                productId: currentItem.objectId,
-                productName: currentItem.name,
-                productPrice: currentItem.price,
-                productImg: currentItem.imgUrl,
-                quantity,
-                selectedSize
-            }]);
-
+            
             obj.push({
                 productId: currentItem.objectId,
                 productName: currentItem.name,
@@ -67,6 +58,7 @@ export function Details() {
                 selectedSize
             })
 
+            setBasket(obj);
         }
 
         try {

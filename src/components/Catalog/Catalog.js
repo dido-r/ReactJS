@@ -25,8 +25,6 @@ export function Catalog() {
     const [pageCount, setPageCount] = useState(0);
     const [isLoading, setIsloading] = useState(true);
     const [modal, setModal] = useState(false);
-
-
     const [showButton, setShowButton] = useState(false);
 
     useEffect(() => {
@@ -131,7 +129,6 @@ export function Catalog() {
 
             <div className={styles['pagination']}>
                 <ReactPaginate
-                    breakLabel="..."
                     nextLabel=">"
                     onPageChange={onPageSelect}
                     pageRangeDisplayed={5}

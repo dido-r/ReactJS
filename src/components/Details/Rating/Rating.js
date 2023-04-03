@@ -21,10 +21,10 @@ export function Rating({ objectId }) {
     const [modal, setModal] = useState(false);
     const [modalMessage, setModalMessage] = useState(false);
     const [hasVoted, setHasVoted] = useState(true);
-    const { user } = useSessionContext();
     const [isLoading, setIsloading] = useState(true);
     const [errorRatingResults, setErrorRatingResults] = useState(false);
     const [errorRatingForm, setErrorRatingForm] = useState(false);
+    const { user } = useSessionContext();
 
     const onRatingSubmit = async (e) => {
         e.preventDefault();
@@ -35,11 +35,11 @@ export function Rating({ objectId }) {
             return setModal(true);
         }
 
-        setHasVoted(true);
-
         try {
-
+            
             await post('classes/Rating', { userId: user.userId, productId: objectId, stars: values.star })
+            setHasVoted(true);
+            setVotes(x => x + 1)
 
         } catch {
 
@@ -47,7 +47,6 @@ export function Rating({ objectId }) {
             setModal(true);
             return;
         }
-
     }
 
     useEffect(() => {
