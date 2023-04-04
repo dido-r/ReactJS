@@ -128,14 +128,14 @@ export function Catalog() {
             <FontAwesomeIcon className={`${styles['arrow-top']} ${!showButton ? styles['arrow-disabled'] : styles['']}`} icon={faArrowUp} onClick={() => { window.scrollTo({ top: 0, left: 0, behavior: 'smooth' }) }} />
 
             <div className={styles['pagination']}>
-                <ReactPaginate
-                    nextLabel=">"
-                    onPageChange={onPageSelect}
-                    pageRangeDisplayed={5}
-                    pageCount={pageCount}
-                    previousLabel="<"
-                    renderOnZeroPageCount={null}
-                />
+                    <ReactPaginate
+                        nextLabel=">"
+                        onPageChange={onPageSelect}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        previousLabel="<"
+                        renderOnZeroPageCount={null}
+                    />
             </div>
         </>
     );

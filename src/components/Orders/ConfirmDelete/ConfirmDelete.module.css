@@ -50,3 +50,8 @@
     font-weight: 1;
     text-decoration: none;
 }
+
+.delete-order-btn:disabled{
+    background-color: #6c6a6a;
+    cursor: default;
+}

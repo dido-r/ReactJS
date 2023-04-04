@@ -6,6 +6,7 @@ import { put, get } from '../../services/api';
 import { MoreDetails } from './MoreDetails/MoreDetails';
 import { Rating } from './Rating/Rating';
 import { useSessionContext } from '../../context/sessionContext';
+import { useForm } from '../../hooks/useForm';
 
 export function Details() {
 
@@ -13,14 +14,16 @@ export function Details() {
     const [details, setDetails] = useState(false);
     const [sizeChart, setSizeChart] = useState(false);
     const [review, setReview] = useState(false);
-    const [quantity, setQuantity] = useState(1);
-    const [selectedSize, setSelectedSize] = useState("");
     const [modalMessage, setModalMessage] = useState("");
     const [currentItem, setCurrentItem] = useState({ size: [] });
     const [isLoading, setIsloading] = useState(false);
     const { itemId } = useParams();
     const { setBasket, basket, user } = useSessionContext();
     const navigate = useNavigate();
+    const { values, onChangeHandler } = useForm({
+        quantity: 1,
+        selectedSize: ''
+    });
 
     const onAddToCard = () => {
 
@@ -30,7 +33,7 @@ export function Details() {
             return;
         }
 
-        if (selectedSize === "") {
+        if (values.selectedSize === "") {
             setModalMessage('Please select a size!');
             return setModal(true);
         }
@@ -39,13 +42,13 @@ export function Details() {
         setModalMessage('Successfully added to your basket');
         setModal(true);
 
-        let isOrdered = basket.find(x => x.productId === itemId && x.selectedSize === selectedSize);
+        let isOrdered = basket.find(x => x.productId === itemId && x.selectedSize === values.selectedSize);
         let obj = Array.from(basket);
        
 
         if (isOrdered !== undefined) {
             
-            isOrdered.quantity += quantity;
+            isOrdered.quantity += values.quantity;
 
         } else {
             
@@ -54,8 +57,8 @@ export function Details() {
                 productName: currentItem.name,
                 productPrice: currentItem.price,
                 productImg: currentItem.imgUrl,
-                quantity,
-                selectedSize
+                quantity: values.quantity,
+                selectedSize: values.selectedSize
             })
 
             setBasket(obj);
@@ -84,19 +87,6 @@ export function Details() {
 
     function showReview() {
         setReview(!review);
-    }
-
-    function increaseQty() {
-
-        setQuantity(quantity + 1);
-    }
-
-    function decreaseQty() {
-        setQuantity(quantity === 1 ? 1 : quantity - 1);
-    }
-
-    const onSizeSelect = (e) => {
-        setSelectedSize(e.target.value);
     }
 
     useEffect(() => {
@@ -133,16 +123,16 @@ export function Details() {
                     <div className={styles['product-size']} >
                         {currentItem.size.map(x =>
                             <div key={x} className={styles['swatch-element']}>
-                                <label style={selectedSize === x ? { border: "1px solid" } : { border: "none" }} htmlFor={x} className={styles['product-form-label']}>{x}<input className={styles['swatch-input']} id={x} type='radio' name="option-size"
-                                    value={x} onChange={onSizeSelect} /></label>
+                                <label style={values.selectedSize === x ? { border: "1px solid" } : { border: "none" }} htmlFor={x} className={styles['product-form-label']}>{x}<input className={styles['swatch-input']} id={x} type='radio' name="selectedSize"
+                                    value={x} onChange={(e) => onChangeHandler(e)} /></label>
                             </div>
                         )}
                     </div>
                     <div className={styles['wrapQtyBtn']}>
                         <div className={styles['qtyField']}>
-                            <Link className={styles['qtyBtn']} onClick={() => decreaseQty()}><i className={styles['fa']} aria-hidden="true">-</i></Link>
-                            <input type="text" id="Quantity" name="quantity" value={quantity} className={styles['qty']} onChange={() => { }} />
-                            <Link className={styles['qtyBtn']} onClick={() => increaseQty()}><i className={styles['fa']} aria-hidden="true">+</i></Link>
+                            <Link className={styles['qtyBtn']} onClick={() => onChangeHandler('-')}><i className={styles['fa']} aria-hidden="true">-</i></Link>
+                            <input type="text" id="Quantity" name="quantity" value={values.quantity} className={styles['qty']} onChange={() => { }} />
+                            <Link className={styles['qtyBtn']} onClick={() => onChangeHandler('+')}><i className={styles['fa']} aria-hidden="true">+</i></Link>
                         </div>
                     </div>
                     <div className={styles['product-form-item-submit']}>

@@ -109,12 +109,12 @@ export function CatalogSidebar({
                     </div>
                     <div className={styles['form-container']}>
                         <form>
-                            <div><label htmlFor="XS"><input id="XS" name="price" type="radio" value={"XS"} checked={valueSize === "XS"} onChange={onChangeOfSize} />XS</label></div>
-                            <div><label htmlFor="S"><input id="S" name="price" type="radio" value={"S"} checked={valueSize === "S"} onChange={onChangeOfSize} />S</label></div>
-                            <div><label htmlFor="M"><input id="M" name="price" type="radio" value={"M"} checked={valueSize === "M"} onChange={onChangeOfSize} />M</label></div>
-                            <div><label htmlFor="L"><input id="L" name="price" type="radio" value={"L"} checked={valueSize === "L"} onChange={onChangeOfSize} />L</label></div>
-                            <div><label htmlFor="XL"><input id="XL" name="price" type="radio" value={"XL"} checked={valueSize === "XL"} onChange={onChangeOfSize} />XL</label></div>
-                            <div><label htmlFor="XXL"><input id="XXL" name="price" type="radio" value={"XXL"} checked={valueSize === "XXL"} onChange={onChangeOfSize} />XXL</label></div>
+                            <div><label htmlFor="XS"><input id="XS" name="size" type="radio" value={"XS"} checked={valueSize === "XS"} onChange={onChangeOfSize} />XS</label></div>
+                            <div><label htmlFor="S"><input id="S" name="size" type="radio" value={"S"} checked={valueSize === "S"} onChange={onChangeOfSize} />S</label></div>
+                            <div><label htmlFor="M"><input id="M" name="size" type="radio" value={"M"} checked={valueSize === "M"} onChange={onChangeOfSize} />M</label></div>
+                            <div><label htmlFor="L"><input id="L" name="size" type="radio" value={"L"} checked={valueSize === "L"} onChange={onChangeOfSize} />L</label></div>
+                            <div><label htmlFor="XL"><input id="XL" name="size" type="radio" value={"XL"} checked={valueSize === "XL"} onChange={onChangeOfSize} />XL</label></div>
+                            <div><label htmlFor="XXL"><input id="XXL" name="size" type="radio" value={"XXL"} checked={valueSize === "XXL"} onChange={onChangeOfSize} />XXL</label></div>
                         </form>
                     </div>
                     <div>
