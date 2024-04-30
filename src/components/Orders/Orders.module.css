@@ -1,3 +1,7 @@
+.orders-container{
+    min-height: calc(100vh - 300px);
+}
+
 .orders-title {
     text-align: center;
 }

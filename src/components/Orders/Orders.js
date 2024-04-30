@@ -44,7 +44,7 @@ export function Orders() {
     }, [user.userId]);
 
     return (
-        <>
+        <div className={styles["orders-container"]}>
             <div className={styles["orders-title"]}>
                 <h2 className={styles["page-width"]}>My orders</h2>
             </div>
@@ -85,6 +85,6 @@ export function Orders() {
 
                             </tbody>
                         </table> : <div className={styles['no-orders-container']}><FontAwesomeIcon className={styles['no-orders-icon']} icon={faX} /><h3 className={styles['no-orders']}>You have no orders yet. Please taka a look at our shop and make some!</h3></div>))}
-        </>
+        </div>
     );
 }
