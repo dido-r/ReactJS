@@ -29,4 +29,5 @@
     font-weight: 1;
     margin: auto;
     margin: 0 0 300px 0;
+    height: calc(100vh - 700px);
 }
